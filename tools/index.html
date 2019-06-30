@@ -1,0 +1,57 @@
+<html>
+<head>
+</head>
+<body>
+Device : <span id="device-name"></span>
+
+<form>
+<div>
+Sustain pedal configuration : 
+<select id="sustain">
+  <option value="0">0</option>
+  <option value="1">1</option>
+</select>
+</div>
+<input type="submit">
+</form>
+<script>
+
+function onMIDISuccess( midiAccess ) {
+  console.log( "MIDI ready!" );
+  listInputsAndOutputs( midiAccess );
+  midiAccess.addEventListener('statechange', function(event) {
+	  listInputsAndOutputs(event.target);
+	  });
+}
+
+function onMIDIFailure(msg) {
+  console.log( "Failed to get MIDI access - " + msg );
+}
+
+navigator.requestMIDIAccess( { sysex: true } ).then( onMIDISuccess, onMIDIFailure );
+
+function listInputsAndOutputs( midiAccess ) {
+	var pianoDeVoyage;
+	for (var output of midiAccess.outputs.values()) {
+		if (output.manufacturer === "Ryme Music") {
+			pianoDeVoyage = output;
+		}
+		console.log( "Output port [type:'" + output.type + "'] id:'" + output.id +
+			      "' manufacturer:'" + output.manufacturer + "' name:'" + output.name +
+			      "' version:'" + output.version + "'" );
+	}
+	if (pianoDeVoyage) {
+		document.getElementById("device-name").innerHTML = output.name;
+		sendSysEx(output)
+	} else {
+		document.getElementById("device-name").innerHTML = "Not connected";
+	}
+}
+	
+    
+ function sendSysEx( output ) {
+  output.send( [0xF0, 0x41, 0x10, 0x42, 0x11, 0x00, 0x00, 0xF7]);
+	}
+</script>
+</body>
+</html>
