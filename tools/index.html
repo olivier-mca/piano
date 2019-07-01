@@ -4,7 +4,8 @@
 <body>
 Device : <span id="device-name"></span>
 
-<form>
+<form id="form">
+
 <div>
 Sustain pedal configuration : 
 <select id="sustain">
@@ -12,16 +13,32 @@ Sustain pedal configuration :
   <option value="1">1</option>
 </select>
 </div>
+
+<div>
+Velocity Curve : 
+<select id="velocity">
+  <option value="0">1</option>
+  <option value="1">2</option>
+  <option value="1">3</option>
+  <option value="1">4</option>
+  <option value="1">5</option>
+  <option value="1">6</option>
+  <option value="1">7</option>
+  <option value="1">8</option>
+</select>
+</div>
+
 <input type="submit">
 </form>
+
 <script>
 
 function onMIDISuccess( midiAccess ) {
-  console.log( "MIDI ready!" );
-  listInputsAndOutputs( midiAccess );
-  midiAccess.addEventListener('statechange', function(event) {
+	console.log( "MIDI ready!" );
+	listInputsAndOutputs( midiAccess );
+	midiAccess.addEventListener('statechange', function(event) {
 	  listInputsAndOutputs(event.target);
-	  });
+	});
 }
 
 function onMIDIFailure(msg) {
@@ -29,9 +46,12 @@ function onMIDIFailure(msg) {
 }
 
 navigator.requestMIDIAccess( { sysex: true } ).then( onMIDISuccess, onMIDIFailure );
+var pianoDeVoyage;
 
 function listInputsAndOutputs( midiAccess ) {
-	var pianoDeVoyage;
+	pianoDeVoyage = null;
+	
+	// outputs
 	for (var output of midiAccess.outputs.values()) {
 		if (output.manufacturer === "Ryme Music") {
 			pianoDeVoyage = output;
@@ -42,16 +62,57 @@ function listInputsAndOutputs( midiAccess ) {
 	}
 	if (pianoDeVoyage) {
 		document.getElementById("device-name").innerHTML = output.name;
-		sendSysEx(output)
+		sendSysEx(output, true, 0);
+		sendSysEx(output, true, 1);
 	} else {
 		document.getElementById("device-name").innerHTML = "Not connected";
 	}
+	// inputs
+	for (var input of midiAccess.inputs.values()) {
+		if (input.manufacturer === "Ryme Music") {
+			input.onmidimessage = onMIDIMessage;
+		}
+	}
+	
+	// dom
+	if (pianoDeVoyage) {
+		document.getElementById("form").addEventListener("submit", onSubmit);
+	}
+}
+
+function onSubmit( event ) {
+	event.preventDefault();
+	sendSysEx(pianoDeVoyage, false, 0, document.getElementById("sustain").selectedIndex);
+	sendSysEx(pianoDeVoyage, false, 1, document.getElementById("velocity").selectedIndex+1);
+	
 }
 	
-    
- function sendSysEx( output ) {
-  output.send( [0xF0, 0x41, 0x10, 0x42, 0x11, 0x00, 0x00, 0xF7]);
+function onMIDIMessage( event ) {
+	var str = "MIDI message received at timestamp " + event.timestamp + "[" + event.data.length + " bytes]: ";
+	for (var i=0; i<event.data.length; i++) {
+	  str += "0x" + event.data[i].toString(16) + " ";
 	}
+	console.log( str );
+	if (event.data[0] === 0xF0) {
+		var v = event.data[6];
+		switch(event.data[5]) {
+			case 0x00:
+				// update conf 1
+				var b = v & 0b00000001;
+				document.getElementById("sustain").selectedIndex = b;
+				break;
+			case 0x01:
+				// update velocity curve
+				document.getElementById("velocity").selectedIndex = v-1;
+				break;
+		}
+	}
+}
+    
+function sendSysEx( output , read, addr, value) {
+	var action = read?0x11:0x12;
+	output.send( [0xF0, 0x41, 0x10, 0x42, action, addr, value, 0x00, 0xF7]);
+}
 </script>
 </body>
 </html>
