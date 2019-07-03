@@ -92,16 +92,31 @@ function listInputsAndOutputs( midiAccess ) {
 
 function onSubmit( event ) {
 	event.preventDefault();
-	sendSysEx(pianoDeVoyage, false, 0, document.getElementById("sustain").selectedIndex);
-	sendSysEx(pianoDeVoyage, false, 1, document.getElementById("velocity").selectedIndex+1);
+	sendSysEx(pianoDeVoyage, false, 0, [document.getElementById("sustain").selectedIndex]);
+	// send read cmd to make sure we're good
+	sendSysEx(pianoDeVoyage, true, 0);
+	
+	// velocity
+	var values = [];
+	for (var i=0; i<velCurveConfig.points.length; i++) {
+		values.push(velCurveConfig.points[i][0]); // x
+		values.push(velCurveConfig.points[i][1]); // y
+	}
+	sendSysEx(pianoDeVoyage, false, 1, values);
+	sendSysEx(pianoDeVoyage, true, 1);
 }
 
 function onSelectVelocity( event ) {
+	velCurveConfig = [];
+	var points = velCurves[document.getElementById("velocity").selectedIndex].points;
+	for (var i=0; i<points.length; i++) {
+		velCurveConfig.push(points[i]);
+	}
 	drawVelocityCurve();
 }
 	
 function onMIDIMessage( event ) {
-	var str = "MIDI message received at timestamp " + event.timestamp + "[" + event.data.length + " bytes]: ";
+	var str = "MIDI message received [" + event.data.length + " bytes]: ";
 	for (var i=0; i<event.data.length; i++) {
 	  str += "0x" + event.data[i].toString(16) + " ";
 	}
@@ -116,18 +131,43 @@ function onMIDIMessage( event ) {
 				break;
 			case 0x01:
 				// update velocity curve
-				document.getElementById("velocity").selectedIndex = v-1;
+				var values = readSysEx(event.data);
+				velCurveConfig = [];
+				for (var i=0; i<values.length; i=i+2) {
+					velCurveConfig.push([values[i],values[i+1]]);
+				}
 				drawVelocityCurve();
 				break;
 		}
 	}
 }
+
+function readSysEx(buffer) {
+	var v;
+	var values[];
+	for (var i=6; i<buffer.length; i++) {
+		v = buffer(i);
+		if (v == 0xF0) {
+			break;
+		} else {
+			values.push(v);
+		}
+	}
+	return values;
+}
     
-function sendSysEx( output , read, addr, value) {
+function sendSysEx( output , read, addr, values) {
 	var action = read?0x11:0x12;
-	output.send( [0xF0, 0x41, 0x10, 0x42, action, addr, value, 0x00, 0xF7]);
+	var buffer = [0xF0, 0x41, 0x10, 0x42, action, addr];
+	for (var i=0; i<values.length; i++) {
+		buffer.push(values[i]);
+	}
+	buffer.push(0x00);
+	buffer.push(0xF7);
+	output.send( buffer);
 }
 
+var velCurveConfig = [];
 var velCurves = [
 	{name:"1 - Linear", points : [[127,127], [127,127], [127,127], [127,127], [127,127]]},
 	{name:"2 - Compressed", points : [[5,2], [10,8], [15,12], [50,30], [80,70]]},
@@ -142,7 +182,6 @@ var velCurves = [
 function drawVelocityCurve() {
 	var canvas = document.getElementById("velocity-canvas");
 	var ctx = canvas.getContext("2d");
-	var velCurveConfig = velCurves[document.getElementById("velocity").selectedIndex];
 	var velCurvePoints = [[0,0]];
 	for (var i=0; i<velCurveConfig.points.length; i++) {
 		velCurvePoints.push(velCurveConfig.points[i]);
