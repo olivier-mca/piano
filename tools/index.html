@@ -84,8 +84,8 @@ function listInputsAndOutputs( midiAccess ) {
 	}
 	
 	// dom
+	document.getElementById("velocity").addEventListener("change", onSelectVelocity);
 	if (pianoDeVoyage) {
-		document.getElementById("velocity").addEventListener("select", onSelectVelocity);
 		document.getElementById("form").addEventListener("submit", onSubmit);
 	}
 }
@@ -98,17 +98,22 @@ function onSubmit( event ) {
 	
 	// velocity
 	var values = [];
-	for (var i=0; i<velCurveConfig.points.length; i++) {
-		values.push(velCurveConfig.points[i][0]); // x
-		values.push(velCurveConfig.points[i][1]); // y
+	for (var i=0; i<velCurveConfig.length; i++) {
+		values.push(velCurveConfig[i][0]); // x
+		values.push(velCurveConfig[i][1]); // y
 	}
 	sendSysEx(pianoDeVoyage, false, 1, values);
 	sendSysEx(pianoDeVoyage, true, 1);
 }
 
 function onSelectVelocity( event ) {
+	selectVelocity(document.getElementById("velocity").selectedIndex);
+	drawVelocityCurve();
+}
+
+function selectVelocity(idx) {
 	velCurveConfig = [];
-	var points = velCurves[document.getElementById("velocity").selectedIndex].points;
+	var points = velCurves[idx].points;
 	for (var i=0; i<points.length; i++) {
 		velCurveConfig.push(points[i]);
 	}
@@ -144,7 +149,7 @@ function onMIDIMessage( event ) {
 
 function readSysEx(buffer) {
 	var v;
-	var values[];
+	var values = [];
 	for (var i=6; i<buffer.length; i++) {
 		v = buffer(i);
 		if (v == 0xF0) {
@@ -183,8 +188,8 @@ function drawVelocityCurve() {
 	var canvas = document.getElementById("velocity-canvas");
 	var ctx = canvas.getContext("2d");
 	var velCurvePoints = [[0,0]];
-	for (var i=0; i<velCurveConfig.points.length; i++) {
-		velCurvePoints.push(velCurveConfig.points[i]);
+	for (var i=0; i<velCurveConfig.length; i++) {
+		velCurvePoints.push(velCurveConfig[i]);
 	}
 	velCurvePoints.push([127,127]);
 	
@@ -212,6 +217,7 @@ function drawVelocityCurve() {
 	}
 }
 
+selectVelocity(0);
 drawVelocityCurve();
 
 </script>
