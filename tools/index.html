@@ -164,8 +164,10 @@ function readSysEx(buffer) {
 function sendSysEx( output , read, addr, values) {
 	var action = read?0x11:0x12;
 	var buffer = [0xF0, 0x41, 0x10, 0x42, action, addr];
-	for (var i=0; i<values.length; i++) {
-		buffer.push(values[i]);
+	if (values) {
+		for (var i=0; i<values.length; i++) {
+			buffer.push(values[i]);
+		}
 	}
 	buffer.push(0x00);
 	buffer.push(0xF7);
@@ -187,6 +189,7 @@ var velCurves = [
 function drawVelocityCurve() {
 	var canvas = document.getElementById("velocity-canvas");
 	var ctx = canvas.getContext("2d");
+	ctx.clearRect(0, 0, 127, 127);
 	var velCurvePoints = [[0,0]];
 	for (var i=0; i<velCurveConfig.length; i++) {
 		velCurvePoints.push(velCurveConfig[i]);
