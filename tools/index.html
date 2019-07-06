@@ -44,10 +44,11 @@ Velocity Curve :
 
 function onMIDISuccess( midiAccess ) {
 	console.log( "MIDI ready!" );
-	listInputsAndOutputs( midiAccess );
 	midiAccess.addEventListener('statechange', function(event) {
 	  listInputsAndOutputs(event.target);
 	});
+	listInputsAndOutputs( midiAccess );
+
 }
 
 function onMIDIFailure(msg) {
@@ -63,30 +64,39 @@ function listInputsAndOutputs( midiAccess ) {
 	// outputs
 	for (var output of midiAccess.outputs.values()) {
 		if (output.manufacturer === "Ryme Music") {
-			pianoDeVoyage = output;
-		}
-		console.log( "Output port [type:'" + output.type + "'] id:'" + output.id +
-			      "' manufacturer:'" + output.manufacturer + "' name:'" + output.name +
-			      "' version:'" + output.version + "'" );
-	}
-	if (pianoDeVoyage) {
-		document.getElementById("device-name").innerHTML = output.name;
-		sendSysEx(output, true, 0);
-		sendSysEx(output, true, 1);
-	} else {
-		document.getElementById("device-name").innerHTML = "Not connected";
-	}
-	// inputs
-	for (var input of midiAccess.inputs.values()) {
-		if (input.manufacturer === "Ryme Music") {
-			input.onmidimessage = onMIDIMessage;
+			if (output.connection === "open") {
+				// inputs
+				for (var input of midiAccess.inputs.values()) {
+					if (input.manufacturer === "Ryme Music") {
+						if (input.connection === "open") {
+							pianoDeVoyage = output;
+							input.onmidimessage = onMIDIMessage;			
+							console.log( "Output port [type:'" + output.type + "'] id:'" + output.id +
+								      "' manufacturer:'" + output.manufacturer + "' name:'" + output.name +
+								      "' version:'" + output.version + "'" );
+							document.getElementById("device-name").innerHTML = output.name;
+							document.getElementById("velocity").addEventListener("change", onSelectVelocity);
+							document.getElementById("form").addEventListener("submit", onSubmit);
+							
+							// read pedal config
+							sendSysEx(pianoDeVoyage, true, 0);
+							// read velocity config
+							sendSysEx(pianoDeVoyage, true, 1);
+						} else {
+							// will trigger a state change event
+							input.open();
+						}
+					}
+				}
+			} else {
+				// will trigger a state change event
+				output.open();
+			}
 		}
 	}
 	
-	// dom
-	document.getElementById("velocity").addEventListener("change", onSelectVelocity);
-	if (pianoDeVoyage) {
-		document.getElementById("form").addEventListener("submit", onSubmit);
+	if (!pianoDeVoyage) {
+		document.getElementById("device-name").innerHTML = "Not connected";
 	}
 }
 
@@ -121,7 +131,7 @@ function selectVelocity(idx) {
 }
 	
 function onMIDIMessage( event ) {
-	var str = "MIDI message received [" + event.data.length + " bytes]: ";
+	var str = "MIDI message received at timestamp " + event.timestamp + "[" + event.data.length + " bytes]: ";
 	for (var i=0; i<event.data.length; i++) {
 	  str += "0x" + event.data[i].toString(16) + " ";
 	}
@@ -151,7 +161,7 @@ function readSysEx(buffer) {
 	var v;
 	var values = [];
 	for (var i=6; i<buffer.length; i++) {
-		v = buffer(i);
+		v = buffer[i];
 		if (v == 0xF0) {
 			break;
 		} else {
@@ -168,6 +178,8 @@ function sendSysEx( output , read, addr, values) {
 		for (var i=0; i<values.length; i++) {
 			buffer.push(values[i]);
 		}
+	} else {
+		buffer.push(0x00);
 	}
 	buffer.push(0x00);
 	buffer.push(0xF7);
@@ -176,14 +188,14 @@ function sendSysEx( output , read, addr, values) {
 
 var velCurveConfig = [];
 var velCurves = [
-	{name:"1 - Linear", points : [[127,127], [127,127], [127,127], [127,127], [127,127]]},
-	{name:"2 - Compressed", points : [[5,2], [10,8], [15,12], [50,30], [80,70]]},
-	{name:"3 - Medium", points : [[0,0], [10, 10], [15,20], [50,30], [80,70]]},
-	{name:"4 - Compressor/Expander", points : [[0,0], [10, 10], [15,20], [50,30], [80,70]]},
-	{name:"5 - Low velocity 1", points : [[0,0], [10, 10], [15,20], [50,30], [80,70]]},
-	{name:"6 - Low velocity 2", points : [[0,0], [10, 10], [15,20], [50,30], [80,70]]},
-	{name:"7 - Compressed top and bottom", points : [[0,0], [10, 10], [15,20], [50,30], [80,70]]},
-	{name:"8 - Full velocity", points : [[0,0], [10, 10], [15,20], [50,30], [80,70]]}
+	{name:"1 - Linear", points : [[127,127], [127,127], [127,127], [127,127], [127,127],[127,127], [127,127], [127,127], [127,127], [127,127]]},
+	{name:"2 - Compressed", points : [[5,2], [10,8], [15,12], [50,30], [80,70],[127,127], [127,127], [127,127], [101,102], [103,104]]},
+	{name:"3 - Medium", points : [[0,0], [10, 10], [15,20], [50,30], [80,70], [127,127], [127,127], [127,127], [127,127], [127,127]]},
+	{name:"4 - Compressor/Expander", points : [[0,0], [10, 10], [15,20], [50,30], [80,70], [127,127], [127,127], [127,127], [127,127], [127,127]]},
+	{name:"5 - Low velocity 1", points : [[0,0], [10, 10], [15,20], [50,30], [80,70], [127,127], [127,127], [127,127], [127,127], [127,127]]},
+	{name:"6 - Low velocity 2", points : [[0,0], [10, 10], [15,20], [50,30], [80,70], [127,127], [127,127], [127,127], [127,127], [127,127]]},
+	{name:"7 - Compressed top and bottom", points : [[0,0], [10, 10], [15,20], [50,30], [80,70], [127,127], [127,127], [127,127], [127,127], [127,127]]},
+	{name:"8 - Full velocity", points : [[0,0], [10, 10], [15,20], [50,30], [80,70], [127,127], [127,127], [127,127], [127,127], [127,127]]}
 	];
 
 function drawVelocityCurve() {
@@ -220,8 +232,10 @@ function drawVelocityCurve() {
 	}
 }
 
+/*
 selectVelocity(0);
 drawVelocityCurve();
+*/
 
 </script>
 </body>
