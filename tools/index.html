@@ -8,36 +8,49 @@
 </style>
 </head>
 <body>
-Device : <span id="device-name"></span>
-
-<form id="form">
-
-<div>
-Sustain pedal configuration : 
-<select id="sustain">
-  <option value="0">0</option>
-  <option value="1">1</option>
-</select>
+<h1>Keyboard Configuration App</h1>
+<div id="device">
+	Connected device : <span id="device-name"></span>
 </div>
 
+<form id="form">
 <div>
-Velocity Curve : 
+<h2>
+Sustain Pedal
+</h2>
+ON MIDI value is  
+<select id="sustain">
+  <option value="0">127 (default)</option>
+  <option value="1">0</option>
+</select>
+
+</div>
+
+<h2>
+Velocity Curve 
+</h2>
+<div>
+<canvas id="velocity-canvas" width="128" height="128"></canvas>
+</div>
+Velocity Curve Presets :
 <select id="velocity">
+  <option value="0 - Custom">-</option>
   <option value="1 - Linear">1 - Linear</option>
   <option value="2 - Compressed">2 - Compressed</option>
   <option value="3 - Medium">3 - Medium</option>
   <option value="4 - Compressor/Expander">4 - Compressor/Expander</option>
-  <option value="5 - Low velocity 1">5 - Low velocity 1</option>
+  <option value="5 - Low velocity 1">5 - Low velocity 1 (default)</option>
   <option value="6 - Low velocity 2">6 - Low velocity 2</option>
   <option value="7 - Compressed top and bottom">7 - Compressed top and bottom</option>
   <option value="8 - Full velocity">8 - Full velocity</option>
 </select>
-</div>
-<div>
-<canvas id="velocity-canvas" width="128" height="128"></canvas>
-</div>
 
-<input type="submit">
+<h2>
+Actions 
+</h2>
+<div>
+<input type="submit" value="Send to device">
+</div>
 </form>
 
 <script>
