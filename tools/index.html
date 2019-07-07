@@ -1,60 +1,114 @@
 <html>
 <head>
+	<title>Keyboard Configuration App</title>
+	<meta name="robots" content="noindex">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
+      ga('create', 'UA-873168-3', 'auto');
+      ga('send', 'pageview');
+    </script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    
 <style>
 #velocity-canvas {
 	border:1px solid #000000
 }
 </style>
+
 </head>
 <body>
-<h1>Keyboard Configuration App</h1>
-<div id="device">
-	Connected device : <span id="device-name"></span>
+
+<div class="container">
+
+<div id="alert-updated" class="alert alert-success alert-dismissible fade hidden" role="alert">
+  Device updated successfully
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
 </div>
 
-<form id="form">
-<div>
-<h2>
-Sustain Pedal
-</h2>
-ON MIDI value is  
-<select id="sustain">
-  <option value="0">127 (default)</option>
-  <option value="1">0</option>
-</select>
+  <div class="row">
+    <div class="col">
+      	<h1>Keyboard Configuration</h1>
+		
+		<div id="device">
+			Device connected : <span id="device-name"></span>
+		</div>
+    </div>
+  </div>
+  
+  <div class="row">
+    <hr>
+  </div>
+  
+  <form id="form">
+  
+  <div class="row">
+    <div class="col">
+		<b>
+		Sustain Pedal
+		</b>
+		<div>
+			ON MIDI value is  
+			<select id="sustain" disabled>
+			  <option value="0">127 (default)</option>
+			  <option value="1">0</option>
+			</select>
+		</div>
+    </div>
+  </div>
 
-</div>
+	<div class="row">
+	    <div class="col">
+			<b>
+			Velocity Curve 
+			</b>
+			<div>
+			<canvas id="velocity-canvas" width="128" height="128"></canvas>
+			</div>
+			Velocity Curve Presets :
+			<select id="velocity">
+			  <option value="0 - Custom">-</option>
+			  <option value="1 - Linear">1 - Linear</option>
+			  <option value="2 - Compressed">2 - Compressed</option>
+			  <option value="3 - Medium">3 - Medium</option>
+			  <option value="4 - Compressor/Expander">4 - Compressor/Expander</option>
+			  <option value="5 - Low velocity 1">5 - Low velocity 1 (default)</option>
+			  <option value="6 - Low velocity 2">6 - Low velocity 2</option>
+			  <option value="7 - Compressed top and bottom">7 - Compressed top and bottom</option>
+			  <option value="8 - Full velocity">8 - Full velocity</option>
+			</select>
+	  </div>
+	</div>
 
-<h2>
-Velocity Curve 
-</h2>
-<div>
-<canvas id="velocity-canvas" width="128" height="128"></canvas>
-</div>
-Velocity Curve Presets :
-<select id="velocity">
-  <option value="0 - Custom">-</option>
-  <option value="1 - Linear">1 - Linear</option>
-  <option value="2 - Compressed">2 - Compressed</option>
-  <option value="3 - Medium">3 - Medium</option>
-  <option value="4 - Compressor/Expander">4 - Compressor/Expander</option>
-  <option value="5 - Low velocity 1">5 - Low velocity 1 (default)</option>
-  <option value="6 - Low velocity 2">6 - Low velocity 2</option>
-  <option value="7 - Compressed top and bottom">7 - Compressed top and bottom</option>
-  <option value="8 - Full velocity">8 - Full velocity</option>
-</select>
-
-<h2>
-Actions 
-</h2>
-<div>
-<input type="submit" value="Send to device">
-</div>
+	<div class="row">
+	    <hr>
+	</div>
+  
+	<div class="row">
+	    <div class="col">
+			<input id="update" type="submit" class="btn btn-primary" value="Update device" disabled>
+		</div>
+	</div>
 </form>
 
-<script>
+<!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+ 
 
+<script>
+$(function() {
+	
 function onMIDISuccess( midiAccess ) {
 	console.log( "MIDI ready!" );
 	midiAccess.addEventListener('statechange', function(event) {
@@ -88,7 +142,11 @@ function listInputsAndOutputs( midiAccess ) {
 								      "' manufacturer:'" + output.manufacturer + "' name:'" + output.name +
 								      "' version:'" + output.version + "'" );
 							document.getElementById("device-name").innerHTML = output.name;
-							document.getElementById("velocity").addEventListener("change", onSelectVelocity);
+							var vel = document.getElementById("velocity");
+							vel.addEventListener("change", onSelectVelocity);
+							vel.removeAttribute("disabled");
+							document.getElementById("sustain").removeAttribute("disabled");
+							document.getElementById("update").removeAttribute("disabled");
 							document.getElementById("form").addEventListener("submit", onSubmit);
 							
 							// read pedal config
@@ -109,7 +167,7 @@ function listInputsAndOutputs( midiAccess ) {
 	}
 	
 	if (!pianoDeVoyage) {
-		document.getElementById("device-name").innerHTML = "Not connected";
+		document.getElementById("device-name").innerHTML = "<span class='text-warning'>Please connect a compatible device</span>";
 	}
 }
 
@@ -127,6 +185,7 @@ function onSubmit( event ) {
 	}
 	sendSysEx(pianoDeVoyage, false, 1, values);
 	sendSysEx(pianoDeVoyage, true, 1);
+	$('.alert-updated').alert();
 }
 
 function onSelectVelocity( event ) {
@@ -171,11 +230,14 @@ function onMIDIMessage( event ) {
 }
 
 function readSysEx(buffer) {
-	var v;
+	var v, v2;
 	var values = [];
 	for (var i=6; i<buffer.length; i++) {
 		v = buffer[i];
-		if (v == 0xF0) {
+		v2 = buffer[i+1];
+		if (v2 === 0xF7) {
+			// END of message
+			// verifyChecksum(v);
 			break;
 		} else {
 			values.push(v);
@@ -250,6 +312,8 @@ selectVelocity(0);
 drawVelocityCurve();
 */
 
+});
+
 </script>
-</body>
+ </body>
 </html>
