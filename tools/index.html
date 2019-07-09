@@ -39,7 +39,8 @@
       	<h1>Keyboard Configuration</h1>
 		
 		<div id="device">
-			Device connected : <span id="device-name"></span>
+			Device connected : <span id="device-name"></span> <br>
+			Firmware version : <span id="firmware"></span>
 		</div>
     </div>
   </div>
@@ -109,6 +110,11 @@
 <script>
 $(function() {
 	
+const EEPROM_SUSTAIN = 0;
+const EEPROM_VELOCITY = 1;
+const EEPROM_FIRMWARE = 126;
+const EEPROM_SERIAL = 125;
+	
 function onMIDISuccess( midiAccess ) {
 	console.log( "MIDI ready!" );
 	midiAccess.addEventListener('statechange', function(event) {
@@ -149,10 +155,12 @@ function listInputsAndOutputs( midiAccess ) {
 							document.getElementById("update").removeAttribute("disabled");
 							document.getElementById("form").addEventListener("submit", onSubmit);
 							
+							// read fw config
+							sendSysEx(pianoDeVoyage, true, EEPROM_FIRMWARE);
 							// read pedal config
-							sendSysEx(pianoDeVoyage, true, 0);
+							sendSysEx(pianoDeVoyage, true, EEPROM_SUSTAIN);
 							// read velocity config
-							sendSysEx(pianoDeVoyage, true, 1);
+							sendSysEx(pianoDeVoyage, true, EEPROM_VELOCITY);
 						} else {
 							// will trigger a state change event
 							input.open();
@@ -181,7 +189,7 @@ function onSubmit( event ) {
 	var values = [];
 	for (var i=0; i<velCurveConfig.length; i++) {
 		values.push(velCurveConfig[i][0]); // x
-		values.push(velCurveConfig[i][1]); // y
+		values.push(127-velCurveConfig[i][1]); // y
 	}
 	sendSysEx(pianoDeVoyage, false, 1, values);
 	sendSysEx(pianoDeVoyage, true, 1);
@@ -211,19 +219,23 @@ function onMIDIMessage( event ) {
 	if (event.data[0] === 0xF0) {
 		var v = event.data[6];
 		switch(event.data[5]) {
-			case 0x00:
+			case EEPROM_SUSTAIN:
 				// update conf 1
 				var b = v & 0b00000001;
 				document.getElementById("sustain").selectedIndex = b;
 				break;
-			case 0x01:
+			case EEPROM_VELOCITY:
 				// update velocity curve
 				var values = readSysEx(event.data);
 				velCurveConfig = [];
 				for (var i=0; i<values.length; i=i+2) {
-					velCurveConfig.push([values[i],values[i+1]]);
+					velCurveConfig.push([values[i],127-values[i+1]]);
 				}
 				drawVelocityCurve();
+				break;
+			case EEPROM_FIRMWARE:
+				var values = readSysEx(event.data);
+				document.getElementById("firmware").innerHTML = values.join();
 				break;
 		}
 	}
@@ -263,25 +275,25 @@ function sendSysEx( output , read, addr, values) {
 
 var velCurveConfig = [];
 var velCurves = [
-	{name:"1 - Linear", points : [[127,127], [127,127], [127,127], [127,127], [127,127],[127,127], [127,127], [127,127], [127,127], [127,127]]},
-	{name:"2 - Compressed", points : [[5,2], [10,8], [15,12], [50,30], [80,70],[127,127], [127,127], [127,127], [101,102], [103,104]]},
-	{name:"3 - Medium", points : [[0,0], [10, 10], [15,20], [50,30], [80,70], [127,127], [127,127], [127,127], [127,127], [127,127]]},
-	{name:"4 - Compressor/Expander", points : [[0,0], [10, 10], [15,20], [50,30], [80,70], [127,127], [127,127], [127,127], [127,127], [127,127]]},
-	{name:"5 - Low velocity 1", points : [[0,0], [10, 10], [15,20], [50,30], [80,70], [127,127], [127,127], [127,127], [127,127], [127,127]]},
-	{name:"6 - Low velocity 2", points : [[0,0], [10, 10], [15,20], [50,30], [80,70], [127,127], [127,127], [127,127], [127,127], [127,127]]},
-	{name:"7 - Compressed top and bottom", points : [[0,0], [10, 10], [15,20], [50,30], [80,70], [127,127], [127,127], [127,127], [127,127], [127,127]]},
-	{name:"8 - Full velocity", points : [[0,0], [10, 10], [15,20], [50,30], [80,70], [127,127], [127,127], [127,127], [127,127], [127,127]]}
+	{name:"1 - Linear", points : [[127,0], [127,0], [127,0], [127,0], [127,0],[127,0], [127,0], [127,0], [127,0], [127,0]]},
+	{name:"2 - Compressed", points : [[24, 118], [52, 101], [102, 42], [127,0], [127,0],[127,0], [127,0], [127,0], [101,102], [103,104]]},
+	{name:"3 - Medium", points : [[11, 98],[27, 74],[62, 65],[97, 57],[116, 21],[121, 5],[127,0], [127,0], [127,0], [127,0]]},
+	{name:"4 - Compressor/Expander", points : [[1, 114],[12, 104],[100, 94],[116, 55],[122, 5], [127,0], [127,0], [127,0], [127,0], [127,0]]},
+	{name:"5 - Low velocity 1", points : [[6, 120],[30, 120],[53, 112],[81, 89],[102, 59],[113, 30],[119, 5], [127,0], [127,0], [127,0]]},
+	{name:"6 - Low velocity 2", points : [[9, 116],[45, 116],[62, 110],[83, 95],[100, 73],[113, 44],[120, 6], [127,0], [127,0], [127,0]]},
+	{name:"7 - Compressed top and bottom", points : [[5, 104],[47, 94],[77, 82],[99, 66],[115, 45],[120, 34],[122, 5], [127,0], [127,0], [127,0]]},
+	{name:"8 - Full velocity", points : [[0,0], [127,0], [127,0], [127,0], [127,0], [127,0], [127,0], [127,0], [127,0], [127,0]]}
 	];
 
 function drawVelocityCurve() {
 	var canvas = document.getElementById("velocity-canvas");
 	var ctx = canvas.getContext("2d");
 	ctx.clearRect(0, 0, 127, 127);
-	var velCurvePoints = [[0,0]];
+	var velCurvePoints = [[0,127]];
 	for (var i=0; i<velCurveConfig.length; i++) {
 		velCurvePoints.push(velCurveConfig[i]);
 	}
-	velCurvePoints.push([127,127]);
+	velCurvePoints.push([127,0]);
 	
 	for (var i=0; i<velCurvePoints.length-1; i++) {
 		var p0 = velCurvePoints[i];
@@ -289,7 +301,7 @@ function drawVelocityCurve() {
 		// point
 		ctx.fillStyle = 'rgb(200, 0, 0)';
         ctx.beginPath();
-        ctx.arc(p0[0], 127-p0[1], 3, 0, 2 * Math.PI);
+        ctx.arc(p0[0], p0[1], 3, 0, 2 * Math.PI);
         ctx.fill();
         // line
         var xA=p0[0];
@@ -302,7 +314,7 @@ function drawVelocityCurve() {
         for (var x=xA; x<xB; x++) {
         	var y = m*x + p;
         	console.log("x:"+x+" y:"+y);
-        	ctx.fillRect(x, 127-y, 1, 1);
+        	ctx.fillRect(x, y, 1, 1);
         }
 	}
 }
