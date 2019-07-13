@@ -27,8 +27,8 @@
 
 <div class="container">
 
-<div id="alert-updated" class="alert alert-success alert-dismissible fade hidden" role="alert">
-  Device updated successfully
+<div id="alert" class="alert alert-success alert-dismissible hidden" role="alert">
+  <span id="message"></span>
   <button type="button" class="close" data-dismiss="alert" aria-label="Close">
     <span aria-hidden="true">&times;</span>
   </button>
@@ -101,7 +101,7 @@
   
 	<div class="row">
 	    <div class="col">
-			<input id="update" type="submit" class="btn btn-primary" value="Update device" disabled>
+			<input id="update" type="submit" class="btn btn-primary" value="Send to keyboard" disabled>
 		</div>
 	</div>
 </form>
@@ -121,6 +121,8 @@ const EEPROM_VELOCITY = 1;
 const EEPROM_FIRMWARE = 126;
 const EEPROM_SERIAL = 125;
 const MANUFACTURER_MIDI_ID = 0x20;
+
+
 	
 function onMIDISuccess( midiAccess ) {
 	console.log( "MIDI ready!" );
@@ -128,14 +130,22 @@ function onMIDISuccess( midiAccess ) {
 	  listInputsAndOutputs(event.target);
 	});
 	listInputsAndOutputs( midiAccess );
-
 }
 
 function onMIDIFailure(msg) {
   console.log( "Failed to get MIDI access - " + msg );
+  document.getElementById("message").innerHTML = 
+	  "Sorry, Web MIDI is not supported by your browser, please use Chrome or install the <a href='https://jazz-soft.net/download/web-midi/'>WebMIDI plugin</a>";
+  $('#alert').show();
 }
 
-navigator.requestMIDIAccess( { sysex: true } ).then( onMIDISuccess, onMIDIFailure );
+if (navigator.requestMIDIAccess) {
+	$('#alert').alert('close');
+	navigator.requestMIDIAccess( { sysex: true } ).then( onMIDISuccess, onMIDIFailure );
+} else {
+	onMIDIFailure("");
+}
+
 var pianoDeVoyage;
 
 function listInputsAndOutputs( midiAccess ) {
@@ -203,7 +213,7 @@ function onSubmit( event ) {
 	}
 	sendSysEx(pianoDeVoyage, false, 1, values);
 	sendSysEx(pianoDeVoyage, true, 1);
-	$('.alert-updated').alert();
+	alert("Keyboard updated");
 }
 
 function onSelectVelocity( event ) {
