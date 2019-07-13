@@ -66,27 +66,33 @@
     </div>
   </div>
 
+<div class="row">
+<div class="col">
+&nbsp;
+</div>
+</div>
+
 	<div class="row">
 	    <div class="col">
 			<b>
 			Velocity Curve 
 			</b>
-			<div>
-			<canvas id="velocity-canvas" width="128" height="128"></canvas>
-			</div>
-			Velocity Curve Presets :
-			<select id="velocity">
-			  <option value="0 - Custom">-</option>
-			  <option value="1 - Linear">1 - Linear</option>
-			  <option value="2 - Compressed">2 - Compressed</option>
-			  <option value="3 - Medium">3 - Medium</option>
-			  <option value="4 - Compressor/Expander">4 - Compressor/Expander</option>
-			  <option value="5 - Low velocity 1">5 - Low velocity 1 (default)</option>
-			  <option value="6 - Low velocity 2">6 - Low velocity 2</option>
-			  <option value="7 - Compressed top and bottom">7 - Compressed top and bottom</option>
-			  <option value="8 - Full velocity">8 - Full velocity</option>
-			</select>
-	  </div>
+			<br>
+				Current configuration<br>
+				<canvas id="velocity-canvas" width="128" height="128"></canvas>
+				<br>
+				<div id="velocity">
+				Velocity Curve Presets<br>
+				  <button type="button" id="vel1">1 - Linear</button><br>
+				  <button type="button" id="vel2">2 - Compressed</button><br>
+				  <button type="button" id="vel3">3 - Medium</button><br>
+				  <button type="button" id="vel4">4 - Compressor/Expander</button><br>
+				  <button type="button" id="vel5">5 - Low velocity 1 (default)</button><br>
+				  <button type="button" id="vel6">6 - Low velocity 2</button><br>
+				  <button type="button" id="vel7">7 - Compressed top and bottom</button><br>
+				  <button type="button" id="vel8">8 - Full velocity</button>
+				</div>
+	  	</div>
 	</div>
 
 	<div class="row">
@@ -114,6 +120,7 @@ const EEPROM_SUSTAIN = 0;
 const EEPROM_VELOCITY = 1;
 const EEPROM_FIRMWARE = 126;
 const EEPROM_SERIAL = 125;
+const MANUFACTURER_MIDI_ID = 0x20;
 	
 function onMIDISuccess( midiAccess ) {
 	console.log( "MIDI ready!" );
@@ -149,7 +156,10 @@ function listInputsAndOutputs( midiAccess ) {
 								      "' version:'" + output.version + "'" );
 							document.getElementById("device-name").innerHTML = output.name;
 							var vel = document.getElementById("velocity");
-							vel.addEventListener("change", onSelectVelocity);
+							var items = vel.querySelectorAll("button");
+							items.forEach(function(item) {
+								  item.addEventListener("click", onSelectVelocity);
+								});
 							vel.removeAttribute("disabled");
 							document.getElementById("sustain").removeAttribute("disabled");
 							document.getElementById("update").removeAttribute("disabled");
@@ -197,7 +207,8 @@ function onSubmit( event ) {
 }
 
 function onSelectVelocity( event ) {
-	selectVelocity(document.getElementById("velocity").selectedIndex);
+	var id = parseInt(event.target.id.charAt(3));
+	selectVelocity(id-1);
 	drawVelocityCurve();
 }
 
@@ -235,7 +246,12 @@ function onMIDIMessage( event ) {
 				break;
 			case EEPROM_FIRMWARE:
 				var values = readSysEx(event.data);
-				document.getElementById("firmware").innerHTML = values.join();
+				var f = String.fromCharCode(values[0]);
+				f += String.fromCharCode(values[1]) + ".";
+				f += String.fromCharCode(values[2]) + ".";
+				f += String.fromCharCode(values[3]) + ".";
+				f += String.fromCharCode(values[4]);
+				document.getElementById("firmware").innerHTML = f;
 				break;
 		}
 	}
@@ -260,7 +276,7 @@ function readSysEx(buffer) {
     
 function sendSysEx( output , read, addr, values) {
 	var action = read?0x11:0x12;
-	var buffer = [0xF0, 0x41, 0x10, 0x42, action, addr];
+	var buffer = [0xF0, MANUFACTURER_MIDI_ID, 0x10, 0x42, action, addr];
 	if (values) {
 		for (var i=0; i<values.length; i++) {
 			buffer.push(values[i]);
@@ -276,7 +292,7 @@ function sendSysEx( output , read, addr, values) {
 var velCurveConfig = [];
 var velCurves = [
 	{name:"1 - Linear", points : [[127,0], [127,0], [127,0], [127,0], [127,0],[127,0], [127,0], [127,0], [127,0], [127,0]]},
-	{name:"2 - Compressed", points : [[24, 118], [52, 101], [102, 42], [127,0], [127,0],[127,0], [127,0], [127,0], [101,102], [103,104]]},
+	{name:"2 - Compressed", points : [[24, 118], [52, 101], [102, 42], [127,0], [127,0],[127,0], [127,0], [127,0], [127,0], [127,0]]},
 	{name:"3 - Medium", points : [[11, 98],[27, 74],[62, 65],[97, 57],[116, 21],[121, 5],[127,0], [127,0], [127,0], [127,0]]},
 	{name:"4 - Compressor/Expander", points : [[1, 114],[12, 104],[100, 94],[116, 55],[122, 5], [127,0], [127,0], [127,0], [127,0], [127,0]]},
 	{name:"5 - Low velocity 1", points : [[6, 120],[30, 120],[53, 112],[81, 89],[102, 59],[113, 30],[119, 5], [127,0], [127,0], [127,0]]},
@@ -308,14 +324,9 @@ function drawVelocityCurve() {
         var yA=p0[1];
         var xB=p1[0];
         var yB=p1[1];
-        var m = ((yB-yA)/(xB-xA));
-        var p = yA - m*xA;
-        ctx.fillStyle = 'rgb(0, 0, 0)';
-        for (var x=xA; x<xB; x++) {
-        	var y = m*x + p;
-        	console.log("x:"+x+" y:"+y);
-        	ctx.fillRect(x, y, 1, 1);
-        }
+        ctx.moveTo(xA, yA);
+        ctx.lineTo(xB, yB);
+        ctx.stroke();
 	}
 }
 
