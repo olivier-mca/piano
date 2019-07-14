@@ -21,7 +21,7 @@ then
 	# ...upload!
 	echo "Upgrading Device..."
 	./files/avrdude/6.3.0-arduino9/bin/avrdude -Cfiles/avrdude.conf -patmega32u4 \
-	-cavr109 -P${ARDUINO_UPLOAD_PORT2} -b57600 -D -Uflash:w:files/R13_MASTER.hex:i > /dev/null 2>&1
+	-cavr109 -P${ARDUINO_UPLOAD_PORT2} -b57600 -D -Uflash:w:files/R13_MASTER.hex:i
 	echo "Done"
 else
     echo "ERROR : No device found to upgrade"
