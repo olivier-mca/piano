@@ -118,6 +118,9 @@ $(function() {
 	
 const EEPROM_SUSTAIN = 0;
 const EEPROM_VELOCITY = 1;
+const EEPROM_MIDI_CHANNEL = 22;
+const EEPROM_TRANSPOSE = 23;
+const EEPROM_OCTAVE = 24;
 const EEPROM_FIRMWARE = 126;
 const EEPROM_SERIAL = 125;
 const MANUFACTURER_MIDI_ID = 0x20;
@@ -181,6 +184,12 @@ function listInputsAndOutputs( midiAccess ) {
 							sendSysEx(pianoDeVoyage, true, EEPROM_SUSTAIN);
 							// read velocity config
 							sendSysEx(pianoDeVoyage, true, EEPROM_VELOCITY);
+							console.log("EEPROM_MIDI_CHANNEL");
+							sendSysEx(pianoDeVoyage, true, EEPROM_MIDI_CHANNEL);
+							console.log("EEPROM_TRANSPOSE");
+							sendSysEx(pianoDeVoyage, true, EEPROM_TRANSPOSE);
+							console.log("EEPROM_OCTAVE");
+							sendSysEx(pianoDeVoyage, true, EEPROM_OCTAVE);
 						} else {
 							// will trigger a state change event
 							input.open();
@@ -201,9 +210,9 @@ function listInputsAndOutputs( midiAccess ) {
 
 function onSubmit( event ) {
 	event.preventDefault();
-	sendSysEx(pianoDeVoyage, false, 0, [document.getElementById("sustain").selectedIndex]);
+	sendSysEx(pianoDeVoyage, false, EEPROM_SUSTAIN, [document.getElementById("sustain").selectedIndex]);
 	// send read cmd to make sure we're good
-	sendSysEx(pianoDeVoyage, true, 0);
+	sendSysEx(pianoDeVoyage, true, EEPROM_SUSTAIN);
 	
 	// velocity
 	var values = [];
@@ -211,8 +220,15 @@ function onSubmit( event ) {
 		values.push(velCurveConfig[i][0]); // x
 		values.push(127-velCurveConfig[i][1]); // y
 	}
-	sendSysEx(pianoDeVoyage, false, 1, values);
-	sendSysEx(pianoDeVoyage, true, 1);
+	sendSysEx(pianoDeVoyage, false, EEPROM_VELOCITY, values);
+	sendSysEx(pianoDeVoyage, true, EEPROM_VELOCITY);
+	
+	sendSysEx(pianoDeVoyage, false, EEPROM_TRANSPOSE, [12]);
+	sendSysEx(pianoDeVoyage, true, EEPROM_TRANSPOSE);
+	
+	sendSysEx(pianoDeVoyage, false, EEPROM_OCTAVE, [3]);
+	sendSysEx(pianoDeVoyage, true, EEPROM_OCTAVE);
+	
 	alert("Keyboard updated");
 }
 
