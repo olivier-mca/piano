@@ -130,7 +130,7 @@ const MANUFACTURER_MIDI_ID = 0x20;
 function onMIDISuccess( midiAccess ) {
 	console.log( "MIDI ready!" );
 	midiAccess.addEventListener('statechange', function(event) {
-	  listInputsAndOutputs(event.target);
+	  listInputsAndOutputs(midiAccess);
 	});
 	listInputsAndOutputs( midiAccess );
 }
@@ -367,5 +367,6 @@ drawVelocityCurve();
 
 </script>
 <img src="https://www.myconcertarchive.com/pixel.gif" height="1" width="1">
+<div style="color : lightgrey;">v1.1</div>
  </body>
 </html>
