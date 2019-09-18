@@ -155,7 +155,13 @@ function listInputsAndOutputs( midiAccess ) {
 	pianoDeVoyage = null;
 	
 	// outputs
-	var log = "log : ";
+	var log = "log : start ";
+	document.getElementById("device-name").innerHTML = log;
+	log += midiAccess + " - ";
+	document.getElementById("device-name").innerHTML = log;
+	log += midiAccess.outputs + " - ";
+	document.getElementById("device-name").innerHTML = log;
+	log += midiAccess.outputs.values() + " - ";
 	document.getElementById("device-name").innerHTML = log;
 	log += "2";
 	for (var output of midiAccess.outputs.values()) {
