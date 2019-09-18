@@ -159,11 +159,11 @@ function listInputsAndOutputs( midiAccess ) {
     for (var o = iter.next(); !o.done; o = iter.next()) {
     	var output = o.value;
 		if ((output.name === "Piano de Voyage") || (output.manufacturer === "Ryme Music")) {
-			if (output.connection === "open") {
+			//if (output.connection === "open") {
 				// inputs
 				for (var input of midiAccess.inputs.values()) {
 					if (input.name === "Piano de Voyage") {
-						if (input.connection === "open") {
+						//if (input.connection === "open") {
 							pianoDeVoyage = output;
 							input.onmidimessage = onMIDIMessage;			
 							console.log( "Output port [type:'" + output.type + "'] id:'" + output.id +
@@ -192,16 +192,20 @@ function listInputsAndOutputs( midiAccess ) {
 							sendSysEx(pianoDeVoyage, true, EEPROM_TRANSPOSE);
 							console.log("EEPROM_OCTAVE");
 							sendSysEx(pianoDeVoyage, true, EEPROM_OCTAVE);
+						/*
 						} else {
 							// will trigger a state change event
 							input.open();
 						}
+						*/
 					}
 				}
+			/*
 			} else {
 				// will trigger a state change event
 				output.open();
 			}
+			*/
 		}
 	}
 	
