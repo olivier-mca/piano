@@ -164,11 +164,15 @@ function listInputsAndOutputs( midiAccess ) {
 	log += midiAccess.outputs.values() + " - ";
 	document.getElementById("device-name").innerHTML = log;
 	log += "2";
-	for (var output of midiAccess.outputs.values()) {
-		log += "Output port [type:'" + output.type + "'] id:'" + output.id +
-			      "' manufacturer:'" + output.manufacturer + "' name:'" + output.name +
-			      "' version:'" + output.version + "'";
-	}
+	
+	 var iter = midiAccess.outputs.values();
+     for (var o = iter.next(); !o.done; o = iter.next()) {
+    	 var output = o.value;
+    	 log += "Output port [type:'" + output.type + "'] id:'" + output.id +
+	      "' manufacturer:'" + output.manufacturer + "' name:'" + output.name +
+	      "' version:'" + output.version + "'";
+     }
+     
 	document.getElementById("device-name").innerHTML = log;
 
 }
