@@ -130,7 +130,7 @@ const MANUFACTURER_MIDI_ID = 0x20;
 function onMIDISuccess( midiAccess ) {
 	console.log( "MIDI ready!" );
 	midiAccess.addEventListener('statechange', function(event) {
-	  listInputsAndOutputs(event.target);
+	  listInputsAndOutputs(midiAccess);
 	});
 	listInputsAndOutputs( midiAccess );
 }
@@ -155,12 +155,11 @@ function listInputsAndOutputs( midiAccess ) {
 	pianoDeVoyage = null;
 	
 	// outputs
-	var log;
+	var log = "log : ";
 	for (var output of midiAccess.outputs.values()) {
 		log += "Output port [type:'" + output.type + "'] id:'" + output.id +
 			      "' manufacturer:'" + output.manufacturer + "' name:'" + output.name +
 			      "' version:'" + output.version + "'";
-		
 	}
 	document.getElementById("device-name").innerHTML = log;
 
