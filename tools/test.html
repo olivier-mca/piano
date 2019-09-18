@@ -161,7 +161,9 @@ function listInputsAndOutputs( midiAccess ) {
 		if ((output.name === "Piano de Voyage") || (output.manufacturer === "Ryme Music")) {
 			//if (output.connection === "open") {
 				// inputs
-				for (var input of midiAccess.inputs.values()) {
+				var inputs = midiAccess.inputs.values();
+    			for (var inp = inputs.next(); !inp.done; inp = inputs.next()) {
+    			var input = inp.value;
 					if (input.name === "Piano de Voyage") {
 						//if (input.connection === "open") {
 							pianoDeVoyage = output;
