@@ -40,7 +40,7 @@
 		
 		<div id="device">
 			Device connected : <span id="device-name"></span> <br>
-			Firmware version : <span id="firmware"></span>
+			Console : <span id="firmware"></span>
 		</div>
     </div>
   </div>
@@ -128,7 +128,7 @@ const MANUFACTURER_MIDI_ID = 0x20;
 
 	
 function onMIDISuccess( midiAccess ) {
-	console.log( "MIDI ready!" );
+	document.getElementById("firmware").innerHTML = "MIDI ready!";
 	midiAccess.addEventListener('statechange', function(event) {
 	  listInputsAndOutputs(midiAccess);
 	});
