@@ -157,8 +157,9 @@ function listInputsAndOutputs( midiAccess ) {
 	// outputs
 	var log;
 	for (var output of midiAccess.outputs.values()) {
-		log += "name:"+output.name;
-		
+		log += "Output port [type:'" + output.type + "'] id:'" + output.id +
+			      "' manufacturer:'" + output.manufacturer + "' name:'" + output.name +
+			      "' version:'" + output.version + "'";
 		
 	}
 	document.getElementById("device-name").innerHTML = log;
