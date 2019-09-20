@@ -36,7 +36,7 @@
 
   <div class="row">
     <div class="col">
-      	<h1>Keyboard Configuration</h1>
+      	<h2>Keyboard Configuration</h2>
 		
 		<div id="device">
 			Device connected : <span id="device-name"></span> <br>
@@ -171,7 +171,7 @@ function listInputsAndOutputs( midiAccess ) {
 							console.log( "Output port [type:'" + output.type + "'] id:'" + output.id +
 								      "' manufacturer:'" + output.manufacturer + "' name:'" + output.name +
 								      "' version:'" + output.version + "'" );
-							document.getElementById("device-name").innerHTML = output.name;
+							document.getElementById("device-name").innerHTML = "<span class='text-success'>"+output.name+"</span>";
 							var vel = document.getElementById("velocity");
 							var items = vel.querySelectorAll("button");
 							items.forEach(function(item) {
@@ -325,7 +325,7 @@ function sendSysEx( output , read, addr, values) {
 
 var velCurveConfig = [];
 var velCurves = [
-	{name:"1 - Linear", points : [[127,0], [127,0], [127,0], [127,0], [127,0],[127,0], [127,0], [127,0], [127,0], [127,0]]},
+	{name:"1 - Linear", points : [[0,127], [127,0], [127,0], [127,0], [127,0],[127,0], [127,0], [127,0], [127,0], [127,0]]},
 	{name:"2 - Compressed", points : [[24, 118], [52, 101], [102, 42], [127,0], [127,0],[127,0], [127,0], [127,0], [127,0], [127,0]]},
 	{name:"3 - Medium", points : [[11, 98],[27, 74],[62, 65],[97, 57],[116, 21],[121, 5],[127,0], [127,0], [127,0], [127,0]]},
 	{name:"4 - Compressor/Expander", points : [[1, 114],[12, 104],[100, 94],[116, 55],[122, 5], [127,0], [127,0], [127,0], [127,0], [127,0]]},
@@ -373,6 +373,6 @@ drawVelocityCurve();
 
 </script>
 <img src="https://www.myconcertarchive.com/pixel.gif" height="1" width="1">
-<div style="color : lightgrey;">v1.1</div>
+<div style="color : lightgrey;">v1.2</div>
  </body>
 </html>
