@@ -65,6 +65,35 @@
 		</div>
     </div>
   </div>
+  
+    <div class="row">
+    <div class="col">
+		<b>
+		MIDI Channel
+		</b>
+		<div>
+			Current MIDI channel :   
+			<select id="channel" disabled>
+			  <option value="0">1 (default)</option>
+			  <option value="1">2</option>
+			  <option value="2">3</option>
+			  <option value="3">4</option>
+			  <option value="4">5</option>
+			  <option value="5">6</option>
+			  <option value="6">7</option>
+			  <option value="7">8</option>
+			  <option value="8">9</option>
+			  <option value="9">10</option>
+			  <option value="10">11</option>
+			  <option value="11">12</option>
+			  <option value="12">13</option>
+			  <option value="13">14</option>
+			  <option value="14">15</option>
+			  <option value="15">16</option>
+			</select>
+		</div>
+    </div>
+  </div>
 
 <div class="row">
 <div class="col">
@@ -179,6 +208,7 @@ function listInputsAndOutputs( midiAccess ) {
 								});
 							vel.removeAttribute("disabled");
 							document.getElementById("sustain").removeAttribute("disabled");
+							document.getElementById("channel").removeAttribute("disabled");
 							document.getElementById("update").removeAttribute("disabled");
 							document.getElementById("form").addEventListener("submit", onSubmit);
 							
@@ -221,6 +251,9 @@ function onSubmit( event ) {
 	sendSysEx(pianoDeVoyage, false, EEPROM_SUSTAIN, [document.getElementById("sustain").selectedIndex]);
 	// send read cmd to make sure we're good
 	sendSysEx(pianoDeVoyage, true, EEPROM_SUSTAIN);
+	
+	sendSysEx(pianoDeVoyage, false, EEPROM_MIDI_CHANNEL, [document.getElementById("channel").selectedIndex]);
+	sendSysEx(pianoDeVoyage, true, EEPROM_MIDI_CHANNEL);
 	
 	// velocity
 	var values = [];
@@ -268,6 +301,9 @@ function onMIDIMessage( event ) {
 				// update conf 1
 				var b = v & 0b00000001;
 				document.getElementById("sustain").selectedIndex = b;
+				break;
+			case EEPROM_MIDI_CHANNEL:
+				document.getElementById("channel").selectedIndex = v;
 				break;
 			case EEPROM_VELOCITY:
 				// update velocity curve
@@ -373,6 +409,6 @@ drawVelocityCurve();
 
 </script>
 <img src="https://www.myconcertarchive.com/pixel.gif" height="1" width="1">
-<div style="color : lightgrey;">v1.2</div>
+<div style="color : lightgrey;">v1.3</div>
  </body>
 </html>
