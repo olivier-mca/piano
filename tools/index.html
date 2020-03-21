@@ -40,14 +40,13 @@
 		
 		<div id="device">
 			Device connected : <span id="device-name"></span> <br>
-			Firmware version : <span id="firmware"></span>
+			Firmware version : <span id="firmware"></span><br>
+			Note ON : <span id="noteon" style="display: inline-block;width: 20px;">-</span>
 		</div>
     </div>
   </div>
   
-  <div class="row">
     <hr>
-  </div>
   
   <form id="form">
   
@@ -93,13 +92,9 @@
 			</select>
 		</div>
     </div>
-  </div>
-
-<div class="row">
-<div class="col">
-&nbsp;
-</div>
-</div>
+    </div>
+    
+    <hr>
 
 	<div class="row">
 	    <div class="col">
@@ -153,6 +148,8 @@ const EEPROM_OCTAVE = 24;
 const EEPROM_FIRMWARE = 126;
 const EEPROM_SERIAL = 125;
 const MANUFACTURER_MIDI_ID = 0x20;
+const NOTE_ON = 0x90;
+const NOTE_OFF = 0x80;
 
 
 	
@@ -294,36 +291,48 @@ function onMIDIMessage( event ) {
 	  str += "0x" + event.data[i].toString(16) + " ";
 	}
 	console.log( str );
-	if (event.data[0] === 0xF0) {
-		var v = event.data[6];
-		switch(event.data[5]) {
-			case EEPROM_SUSTAIN:
-				// update conf 1
-				var b = v & 0b00000001;
-				document.getElementById("sustain").selectedIndex = b;
-				break;
-			case EEPROM_MIDI_CHANNEL:
-				document.getElementById("channel").selectedIndex = v;
-				break;
-			case EEPROM_VELOCITY:
-				// update velocity curve
-				var values = readSysEx(event.data);
-				velCurveConfig = [];
-				for (var i=0; i<values.length; i=i+2) {
-					velCurveConfig.push([values[i],127-values[i+1]]);
-				}
-				drawVelocityCurve();
-				break;
-			case EEPROM_FIRMWARE:
-				var values = readSysEx(event.data);
-				var f = String.fromCharCode(values[0]);
-				f += String.fromCharCode(values[1]) + ".";
-				f += String.fromCharCode(values[2]) + ".";
-				f += String.fromCharCode(values[3]) + ".";
-				f += String.fromCharCode(values[4]);
-				document.getElementById("firmware").innerHTML = f;
-				break;
-		}
+	var v = event.data[1];
+	switch(event.data[0]) {
+		case NOTE_ON:
+			var v1 = event.data[2];
+			document.getElementById("noteon").innerHTML = v;
+			//document.getElementById("noteonVelocity").innerHTML = v1;
+			break;
+		case NOTE_OFF:
+			document.getElementById("noteon").innerHTML = "-";
+			//document.getElementById("noteonVelocity").innerHTML = "-";
+			break;
+		case 0xF0:
+			v = event.data[6];
+			switch(event.data[5]) {
+				case EEPROM_SUSTAIN:
+					// update conf 1
+					var b = v & 0b00000001;
+					document.getElementById("sustain").selectedIndex = b;
+					break;
+				case EEPROM_MIDI_CHANNEL:
+					document.getElementById("channel").selectedIndex = v;
+					break;
+				case EEPROM_VELOCITY:
+					// update velocity curve
+					var values = readSysEx(event.data);
+					velCurveConfig = [];
+					for (var i=0; i<values.length; i=i+2) {
+						velCurveConfig.push([values[i],127-values[i+1]]);
+					}
+					drawVelocityCurve();
+					break;
+				case EEPROM_FIRMWARE:
+					var values = readSysEx(event.data);
+					var f = String.fromCharCode(values[0]);
+					f += String.fromCharCode(values[1]) + ".";
+					f += String.fromCharCode(values[2]) + ".";
+					f += String.fromCharCode(values[3]) + ".";
+					f += String.fromCharCode(values[4]);
+					document.getElementById("firmware").innerHTML = f;
+					break;
+			}
+			break;
 	}
 }
 
@@ -409,6 +418,6 @@ drawVelocityCurve();
 
 </script>
 <img src="https://www.myconcertarchive.com/pixel.gif" height="1" width="1">
-<div style="color : lightgrey;">v1.3</div>
+<div style="color : lightgrey;">v1.4</div>
  </body>
 </html>
