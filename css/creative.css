@@ -50,6 +50,18 @@ h6 {
     font-family: 'Open Sans','Helvetica Neue',Arial,sans-serif;
 }
 
+.h1 {
+	font-size: 56px;
+}
+
+h4 {
+	font-weight: 600;
+}
+
+h1, h4 {
+	color : #f05f40;
+}
+
 p {
     margin-bottom: 20px;
     font-size: 16px;
