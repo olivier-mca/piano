@@ -4,6 +4,10 @@
  * For details, see http://www.apache.org/licenses/LICENSE-2.0.
  */
 
+.embed-responsive-9by16 {
+	padding-bottom: 180%;
+}
+
 html,
 body {
     width: 100%;
