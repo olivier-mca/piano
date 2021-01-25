@@ -95,6 +95,7 @@
     </div>
   </div>
   
+  <hr>
 
     <div class="row">
 	    <div class="col">
@@ -104,17 +105,16 @@
 		    <div class="row">
 		    	<div class="col">
 					<div>
-						Mode 
+						Mode : 
 						<select id="knobmode0" disabled>
 						  <option value="0">Unassigned</option>
 						  <option value="1">MIDI Control</option>
 						  <option value="2">Pitch bend</option>
 						  <option value="3">Aftertouch</option>
 						</select>
-						<br>
-						Control Number 
+						 
+						Control number : 
 						<input id="knobcontrol0" type="text" maxlength="2" size="2" disabled>
-						(default = 07 for volume)
 					</div>
 				</div>
     		</div>
@@ -129,17 +129,16 @@
 		    <div class="row">
 		    	<div class="col">
 					<div>
-						Mode 
+						Mode : 
 						<select id="knobmode1" disabled>
 						  <option value="0">Unassigned</option>
 						  <option value="1">MIDI Control</option>
 						  <option value="2">Pitch bend</option>
 						  <option value="3">Aftertouch</option>
 						</select>
-						<br>
-						Control Number 
+						 
+						Control number : 
 						<input id="knobcontrol1" type="text" maxlength="2" size="2" disabled>
-						(default = 07 for volume)
 					</div>
 				</div>
     		</div>
@@ -149,28 +148,96 @@
     <div class="row">
 	    <div class="col">
 		    <b>
-			Top Left Button
+			Top left Switch
 			</b>
 		    <div class="row">
 		    	<div class="col">
 					<div>
-						Mode 
-						<select id="butbmode0" disabled>
+						Mode : 
+						<select id="butmode0" disabled>
 						  <option value="0">Unassigned</option>
-						  <option value="1" selected>Program shift -</option>
-						  <option value="2">Program shift +</option>
-						  <option value="3">Octave shift -</option>
-						  <option value="4">Octave shift +</option>
-						  <option value="5">Program select</option>
+						  <option value="1">Program shift</option>
+						  <option value="2">Octave shift</option>
+						  <option value="3">Program select</option>
 						</select>
-						<br>
-						Control Number 
+						Control number : 
 						<input id="butcontrol0" type="text" maxlength="2" size="2" disabled>	
 					</div>
 				</div>
     		</div>
 	    </div>
     </div>
+    
+    <div class="row">
+	    <div class="col">
+		    <b>
+			Top right Switch
+			</b>
+		    <div class="row">
+		    	<div class="col">
+					<div>
+						Mode : 
+						<select id="butmode1" disabled>
+						  <option value="0">Unassigned</option>
+						  <option value="1">Program shift</option>
+						  <option value="2">Octave shift</option>
+						  <option value="3">Program select</option>
+						</select>
+						Control number : 
+						<input id="butcontrol1" type="text" maxlength="2" size="2" disabled>	
+					</div>
+				</div>
+    		</div>
+	    </div>
+    </div>
+    
+    <div class="row">
+	    <div class="col">
+		    <b>
+			Bottom Left Switch
+			</b>
+		    <div class="row">
+		    	<div class="col">
+					<div>
+						Mode : 
+						<select id="butmode2" disabled>
+						  <option value="0">Unassigned</option>
+						  <option value="1">Program shift</option>
+						  <option value="2">Octave shift</option>
+						  <option value="3">Program select</option>
+						</select>
+						Control number : 
+						<input id="butcontrol2" type="text" maxlength="2" size="2" disabled>	
+					</div>
+				</div>
+    		</div>
+	    </div>
+    </div>
+    
+    <div class="row">
+	    <div class="col">
+		    <b>
+			Bottom right Switch
+			</b>
+		    <div class="row">
+		    	<div class="col">
+					<div>
+						Mode : 
+						<select id="butmode3" disabled>
+						  <option value="0">Unassigned</option>
+						  <option value="1">Program shift</option>
+						  <option value="2">Octave shift</option>
+						  <option value="3">Program select</option>
+						</select>
+						Control number : 
+						<input id="butcontrol3" type="text" maxlength="2" size="2" disabled>	
+					</div>
+				</div>
+    		</div>
+	    </div>
+    </div>
+
+  <hr>
 
 	<div class="row">
 	    <div class="col">
@@ -372,6 +439,15 @@ function onSubmit( event ) {
 	sendSysEx(pianoDeVoyage, false, EEPROM_KNOBMODE0, values);
 	sendSysEx(pianoDeVoyage, true, EEPROM_KNOBMODE0);
 	
+	// switches
+	values = [];
+	for (var i=0; i<4; i++) {
+		values.push(document.getElementById("butmode"+i).selectedIndex);
+		values.push(parseInt(document.getElementById("butcontrol"+i).value, 16));
+	}
+	sendSysEx(pianoDeVoyage, false, EEPROM_BTNMODE0, values);
+	sendSysEx(pianoDeVoyage, true, EEPROM_BTNMODE0);
+	
 	alert("Keyboard configuration updated");
 }
 
@@ -445,6 +521,16 @@ function onMIDIMessage( event ) {
 						var cc = values[idx+1];
 						document.getElementById("knobmode"+i).selectedIndex = mode;
 						document.getElementById("knobcontrol"+i).value = cc.toString(16);
+					}
+					break;
+				case EEPROM_BTNMODE0:
+					var idx = 0;
+					for (var i=0; i<values.length/2; i++) {
+						idx = i*2;
+						var mode = values[idx];
+						var cc = values[idx+1];
+						document.getElementById("butmode"+i).selectedIndex = mode;
+						document.getElementById("butcontrol"+i).value = cc.toString(16);
 					}
 					break;
 			}
