@@ -101,10 +101,15 @@
 		Octave shift
 		</b>
 		<div>
-			Number of octaves  
+			Number of octaves 
 			<select id="octave" disabled>
-			  <option value="0">0</option>
-			  <option value="1">127 (default)</option>
+			  <option value="0">-3</option>
+			  <option value="1">-2</option>
+			  <option value="1">-1</option>
+			  <option value="1">0 (default)</option>
+			  <option value="1">+1</option>
+			  <option value="1">+2</option>
+			  <option value="1">+3</option>
 			</select>
 		</div>
     </div>
@@ -117,7 +122,7 @@
 		</b>
 		<div>
 			Number of semitones   
-			<select id="sustain" disabled>
+			<select id="transpose" disabled>
 			  <option value="0">-12</option>
 			  <option value="1">-11</option>
 			  <option value="2">-10</option>
@@ -477,10 +482,10 @@ function onSubmit( event ) {
 	sendSysEx(pianoDeVoyage, false, EEPROM_VELOCITY, values);
 	sendSysEx(pianoDeVoyage, true, EEPROM_VELOCITY);
 	
-	sendSysEx(pianoDeVoyage, false, EEPROM_TRANSPOSE, [12]);
+	sendSysEx(pianoDeVoyage, false, EEPROM_TRANSPOSE, [document.getElementById("transpose").selectedIndex]);
 	sendSysEx(pianoDeVoyage, true, EEPROM_TRANSPOSE);
 	
-	sendSysEx(pianoDeVoyage, false, EEPROM_OCTAVE, [3]);
+	sendSysEx(pianoDeVoyage, false, EEPROM_OCTAVE, [document.getElementById("octave").selectedIndex]);
 	sendSysEx(pianoDeVoyage, true, EEPROM_OCTAVE);
 	
 	// knobs
@@ -549,6 +554,12 @@ function onMIDIMessage( event ) {
 					break;
 				case EEPROM_MIDI_CHANNEL:
 					document.getElementById("channel").selectedIndex = v;
+					break;
+				case EEPROM_OCTAVE:
+					document.getElementById("octave").selectedIndex = v;
+					break;
+				case EEPROM_TRANSPOSE:
+					document.getElementById("transpose").selectedIndex = v;
 					break;
 				case EEPROM_VELOCITY:
 					// update velocity curve
