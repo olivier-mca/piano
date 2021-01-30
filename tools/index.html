@@ -153,8 +153,8 @@
     </div>
   </div>
   
+  <div class="section" id="controlpanel" hidden>
   <hr>
-
     <div class="row">
 	    <div class="col">
 		    <b>
@@ -261,7 +261,7 @@
     		</div>
 	    </div>
     </div>
-    
+  </div>
   <hr>
 
 	<div class="row">
@@ -538,11 +538,21 @@ function onMIDIMessage( event ) {
 					break;
 				case EEPROM_FIRMWARE:
 					var f = String.fromCharCode(values[0]);
-					f += String.fromCharCode(values[1]) + ".";
-					f += String.fromCharCode(values[2]) + ".";
-					f += String.fromCharCode(values[3]) + ".";
-					f += String.fromCharCode(values[4]);
+					var v1 = parseInt(String.fromCharCode(values[1]));
+					var v2 = parseInt(String.fromCharCode(values[2]));
+					var v3 = parseInt(String.fromCharCode(values[3]));
+					var v4 = parseInt(String.fromCharCode(values[4]));
+					f += v1 + ".";
+					f += v2 + ".";
+					f += v3 + ".";
+					f += v4;
 					document.getElementById("firmware").innerHTML = f;
+					var panel = document.getElementById("controlpanel");
+					if ((v1 >=2) && (v2>5)) {
+						panel.removeAttribute("hidden");
+					} else {
+						panel.setAttribute("hidden", true);
+					}
 					break;
 				case EEPROM_KNOBMODE0:
 					var idx = 0;
@@ -650,6 +660,6 @@ drawVelocityCurve();
 });
 
 </script>
-<div style="color : lightgrey;">v1.5</div>
+<div style="color : lightgrey;">v1.6</div>
  </body>
 </html>
