@@ -372,13 +372,13 @@ function listInputsAndOutputs( midiAccess ) {
     for (var o = iter.next(); !o.done; o = iter.next()) {
     	var output = o.value;
 		if ((output.name === "Piano de Voyage") || (output.manufacturer === "Ryme Music")) {
-			//if (output.connection === "open") {
+			if (output.connection === "open") {
 				// inputs
 				var inputs = midiAccess.inputs.values();
     			for (var inp = inputs.next(); !inp.done; inp = inputs.next()) {
     			var input = inp.value;
 					if (input.name === "Piano de Voyage") {
-						//if (input.connection === "open") {
+						if (input.connection === "open") {
 							pianoDeVoyage = output;
 							input.onmidimessage = onMIDIMessage;			
 							console.log( "Output port [type:'" + output.type + "'] id:'" + output.id +
@@ -397,36 +397,26 @@ function listInputsAndOutputs( midiAccess ) {
 							
 							form.addEventListener("submit", onSubmit);
 							
-							// read fw config
+							// read config
 							sendSysEx(pianoDeVoyage, true, EEPROM_FIRMWARE);
-							// read pedal config
+							sendSysEx(pianoDeVoyage, true, EEPROM_FIRMWARE); // don't know why but necessary to send twice
 							sendSysEx(pianoDeVoyage, true, EEPROM_SUSTAIN);
-							// read velocity config
 							sendSysEx(pianoDeVoyage, true, EEPROM_VELOCITY);
-							console.log("EEPROM_MIDI_CHANNEL");
 							sendSysEx(pianoDeVoyage, true, EEPROM_MIDI_CHANNEL);
-							console.log("EEPROM_TRANSPOSE");
 							sendSysEx(pianoDeVoyage, true, EEPROM_TRANSPOSE);
-							console.log("EEPROM_OCTAVE");
 							sendSysEx(pianoDeVoyage, true, EEPROM_OCTAVE);
-							console.log("EEPROM_KNOBMODE0");
 							sendSysEx(pianoDeVoyage, true, EEPROM_KNOBMODE0);
-							console.log("EEPROM_BTNMODE0");
 							sendSysEx(pianoDeVoyage, true, EEPROM_BTNMODE0);
-						/*
 						} else {
 							// will trigger a state change event
 							input.open();
 						}
-						*/
 					}
 				}
-			/*
 			} else {
 				// will trigger a state change event
 				output.open();
 			}
-			*/
 		}
 	}
 	
@@ -565,23 +555,27 @@ function onMIDIMessage( event ) {
 					}
 					break;
 				case EEPROM_KNOBMODE0:
-					var idx = 0;
-					for (var i=0; i<values.length/2; i++) {
-						idx = i*2;
-						var mode = values[idx];
-						var cc = values[idx+1];
-						document.getElementById("knobmode"+i).selectedIndex = mode;
-						document.getElementById("knobcontrol"+i).value = cc.toString(16);
+					if (values.length == 2) {
+						var idx = 0;
+						for (var i=0; i<values.length/2; i++) {
+							idx = i*2;
+							var mode = values[idx];
+							var cc = values[idx+1];
+							document.getElementById("knobmode"+i).selectedIndex = mode;
+							document.getElementById("knobcontrol"+i).value = cc.toString(16);
+						}
 					}
 					break;
 				case EEPROM_BTNMODE0:
-					var idx = 0;
-					for (var i=0; i<values.length/2; i++) {
-						idx = i*2;
-						var mode = values[idx];
-						var cc = values[idx+1];
-						document.getElementById("butmode"+i).selectedIndex = mode;
-						document.getElementById("butcontrol"+i).value = cc.toString(16);
+					if (values.length == 2) {
+						var idx = 0;
+						for (var i=0; i<values.length/2; i++) {
+							idx = i*2;
+							var mode = values[idx];
+							var cc = values[idx+1];
+							document.getElementById("butmode"+i).selectedIndex = mode;
+							document.getElementById("butcontrol"+i).value = cc.toString(16);
+						}
 					}
 					break;
 			}
