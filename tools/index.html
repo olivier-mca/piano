@@ -555,7 +555,7 @@ function onMIDIMessage( event ) {
 					}
 					break;
 				case EEPROM_KNOBMODE0:
-					if (values.length == 2) {
+					if (values.length > 2) {
 						var idx = 0;
 						for (var i=0; i<values.length/2; i++) {
 							idx = i*2;
@@ -567,7 +567,7 @@ function onMIDIMessage( event ) {
 					}
 					break;
 				case EEPROM_BTNMODE0:
-					if (values.length == 2) {
+					if (values.length > 2) {
 						var idx = 0;
 						for (var i=0; i<values.length/2; i++) {
 							idx = i*2;
@@ -664,6 +664,6 @@ drawVelocityCurve();
 });
 
 </script>
-<div style="color : lightgrey;">v1.6.1</div>
+<div style="color : lightgrey;">v1.6.2</div>
  </body>
 </html>
