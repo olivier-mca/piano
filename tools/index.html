@@ -9,7 +9,7 @@
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
       m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
       ga('create', 'UA-873168-3', 'auto');
       ga('send', 'pageview');
@@ -36,49 +36,20 @@
 
   <div class="row">
     <div class="col">
-      	<h2>Status</h2>
+      	<h2>Keyboard Configuration</h2>
 		
 		<div id="device">
 			Device connected : <span id="device-name"></span> <br>
 			Firmware version : <span id="firmware"></span><br>
 			Note ON : <span id="noteon" style="display: inline-block;width: 20px;">-</span>
-			Pedal : <span id="sustainon" style="display: inline-block;width: 20px;">-</span>
+			 Pedal : <span id="sustainon" style="display: inline-block;width: 20px;">-</span>
 		</div>
     </div>
   </div>
   
     <hr>
-  <h2>Configuration</h2>
-  <form id="form">
   
-    <div class="row">
-	    <div class="col">
-			<b>
-			MIDI Channel
-			</b>
-			<div>
-				Current MIDI channel :   
-				<select id="channel" disabled>
-				  <option value="0">1 (default)</option>
-				  <option value="1">2</option>
-				  <option value="2">3</option>
-				  <option value="3">4</option>
-				  <option value="4">5</option>
-				  <option value="5">6</option>
-				  <option value="6">7</option>
-				  <option value="7">8</option>
-				  <option value="8">9</option>
-				  <option value="9">10</option>
-				  <option value="10">11</option>
-				  <option value="11">12</option>
-				  <option value="12">13</option>
-				  <option value="13">14</option>
-				  <option value="14">15</option>
-				  <option value="15">16</option>
-				</select>
-			</div>
-	    </div>
-    </div>
+  <form id="form">
   
   <div class="row">
     <div class="col">
@@ -94,180 +65,42 @@
 		</div>
     </div>
   </div>
-
-  <div class="row">
-    <div class="col">
-		<b>
-		Octave shift
-		</b>
-		<div>
-			Number of octaves 
-			<select id="octave" disabled>
-			  <option value="0">-3</option>
-			  <option value="1">-2</option>
-			  <option value="1">-1</option>
-			  <option value="1">0 (default)</option>
-			  <option value="1">+1</option>
-			  <option value="1">+2</option>
-			  <option value="1">+3</option>
-			</select>
-		</div>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col">
-		<b>
-		Transpose
-		</b>
-		<div>
-			Number of semitones   
-			<select id="transpose" disabled>
-			  <option value="0">-12</option>
-			  <option value="1">-11</option>
-			  <option value="2">-10</option>
-			  <option value="3">-9</option>
-			  <option value="4">-8</option>
-			  <option value="5">-7</option>
-			  <option value="6">-6</option>
-			  <option value="7">-5</option>
-			  <option value="8">-4</option>
-			  <option value="9">-3</option>
-			  <option value="10">-2</option>
-			  <option value="11">-1</option>
-			  <option value="12">0 (default)</option>
-			  <option value="13">+1</option>
-			  <option value="14">+2</option>
-			  <option value="15">+3</option>
-			  <option value="16">+4</option>
-			  <option value="17">+5</option>
-			  <option value="18">+6</option>
-			  <option value="19">+7</option>
-			  <option value="20">+8</option>
-			  <option value="21">+9</option>
-			  <option value="22">+10</option>
-			  <option value="23">+11</option>
-			  <option value="24">+12</option>
-			</select>
-		</div>
-    </div>
-  </div>
   
-  <div class="section" id="controlpanel" hidden>
-  <hr>
     <div class="row">
-	    <div class="col">
-		    <b>
-			Knobs
-			</b>
-		    <div class="row">
-		    	<div class="col">
-					<div>
-						Left  
-						<select id="knobmode0" disabled>
-						  <option value="0">Unassigned</option>
-						  <option value="1">MIDI Control</option>
-						  <option value="2">Pitch bend</option>
-						  <option value="3">Aftertouch</option>
-						</select>
-						Control number : 
-						<input id="knobcontrol0" type="text" maxlength="2" size="2" disabled>
-					</div>
-				</div>
-    		</div>
-    		<div class="row">
-		    	<div class="col">
-					<div>
-						Right 
-						<select id="knobmode1" disabled>
-						  <option value="0">Unassigned</option>
-						  <option value="1">MIDI Control</option>
-						  <option value="2">Pitch bend</option>
-						  <option value="3">Aftertouch</option>
-						</select>
-						Control number : 
-						<input id="knobcontrol1" type="text" maxlength="2" size="2" disabled>
-					</div>
-				</div>
-    		</div>
-    		
-	    </div>
+    <div class="col">
+		<b>
+		MIDI Channel
+		</b>
+		<div>
+			Current MIDI channel :   
+			<select id="channel" disabled>
+			  <option value="0">1 (default)</option>
+			  <option value="1">2</option>
+			  <option value="2">3</option>
+			  <option value="3">4</option>
+			  <option value="4">5</option>
+			  <option value="5">6</option>
+			  <option value="6">7</option>
+			  <option value="7">8</option>
+			  <option value="8">9</option>
+			  <option value="9">10</option>
+			  <option value="10">11</option>
+			  <option value="11">12</option>
+			  <option value="12">13</option>
+			  <option value="13">14</option>
+			  <option value="14">15</option>
+			  <option value="15">16</option>
+			</select>
+		</div>
+    </div>
     </div>
     
-    <div class="row">
-	    <div class="col">
-		    <b>
-			Switches
-			</b>
-			<div class="row">
-		    	<div class="col">
-					<div>
-						Top left  
-						<select id="butmode0" disabled>
-						  <option value="0">Unassigned</option>
-						  <option value="1">Program shift</option>
-						  <option value="2">Octave shift</option>
-						  <option value="3">Program select</option>
-						</select>
-						Control number : 
-						<input id="butcontrol0" type="text" maxlength="2" size="2" disabled>	
-					</div>
-				</div>
-    		</div>
-    		<div class="row">
-		    	<div class="col">
-					<div>
-						Lower left  
-						<select id="butmode1" disabled>
-						  <option value="0">Unassigned</option>
-						  <option value="1">Program shift</option>
-						  <option value="2">Octave shift</option>
-						  <option value="3">Program select</option>
-						</select>
-						Control number : 
-						<input id="butcontrol1" type="text" maxlength="2" size="2" disabled>	
-					</div>
-				</div>
-    		</div>
-		    <div class="row">
-		    	<div class="col">
-					<div>
-						Top right 
-						<select id="butmode2" disabled>
-						  <option value="0">Unassigned</option>
-						  <option value="1">Program shift</option>
-						  <option value="2">Octave shift</option>
-						  <option value="3">Program select</option>
-						</select>
-						Control number : 
-						<input id="butcontrol2" type="text" maxlength="2" size="2" disabled>	
-					</div>
-				</div>
-    		</div>
-    		<div class="row">
-		    	<div class="col">
-					<div>
-						Lower right 
-						<select id="butmode3" disabled>
-						  <option value="0">Unassigned</option>
-						  <option value="1">Program shift</option>
-						  <option value="2">Octave shift</option>
-						  <option value="3">Program select</option>
-						</select>
-						Control number : 
-						<input id="butcontrol3" type="text" maxlength="2" size="2" disabled>	
-					</div>
-				</div>
-    		</div>
-	    </div>
-    </div>
-  </div>
-  <hr>
+    <hr>
 
 	<div class="row">
 	    <div class="col">
 			<b>
-			Keyboard Velocity Curve 
+			Velocity Curve 
 			</b>
 			<br>
 				Current configuration<br>
@@ -313,21 +146,8 @@ const EEPROM_VELOCITY = 1;
 const EEPROM_MIDI_CHANNEL = 22;
 const EEPROM_TRANSPOSE = 23;
 const EEPROM_OCTAVE = 24;
-const EEPROM_PEDAL_TYPE = 25;
-const EEPROM_KNOBMODE0 = 26;
-const EEPROM_KNOBCTRL0 = 27;
-const EEPROM_KNOBMODE1 = 28;
-const EEPROM_KNOBCTRL1 = 29;
-const EEPROM_BTNMODE0 = 30;
-const EEPROM_BTNCTRL0 = 31;
-const EEPROM_BTNMODE1 = 32;
-const EEPROM_BTNCTRL1 = 33;
-const EEPROM_BTNMODE2 = 34;
-const EEPROM_BTNCTRL2 = 35;
-const EEPROM_BTNMODE3 = 36;
-const EEPROM_BTNCTRL3 = 37;
-const EEPROM_SERIAL = 125;
 const EEPROM_FIRMWARE = 126;
+const EEPROM_SERIAL = 125;
 const MANUFACTURER_MIDI_ID = 0x20;
 const NOTE_ON = 0x90;
 const NOTE_OFF = 0x80;
@@ -386,12 +206,11 @@ function listInputsAndOutputs( midiAccess ) {
 							items.forEach(function(item) {
 								  item.addEventListener("click", onSelectVelocity);
 								});
-							var form = document.getElementById("form");
-							for (var i = 0; i < form.length; i++) {
-								form[i].removeAttribute("disabled");
-							}
-							
-							form.addEventListener("submit", onSubmit);
+							vel.removeAttribute("disabled");
+							document.getElementById("sustain").removeAttribute("disabled");
+							document.getElementById("channel").removeAttribute("disabled");
+							document.getElementById("update").removeAttribute("disabled");
+							document.getElementById("form").addEventListener("submit", onSubmit);
 							
 							// read fw config
 							sendSysEx(pianoDeVoyage, true, EEPROM_FIRMWARE);
@@ -405,10 +224,6 @@ function listInputsAndOutputs( midiAccess ) {
 							sendSysEx(pianoDeVoyage, true, EEPROM_TRANSPOSE);
 							console.log("EEPROM_OCTAVE");
 							sendSysEx(pianoDeVoyage, true, EEPROM_OCTAVE);
-							console.log("EEPROM_KNOBMODE0");
-							sendSysEx(pianoDeVoyage, true, EEPROM_KNOBMODE0);
-							console.log("EEPROM_BTNMODE0");
-							sendSysEx(pianoDeVoyage, true, EEPROM_BTNMODE0);
 						/*
 						} else {
 							// will trigger a state change event
@@ -449,31 +264,13 @@ function onSubmit( event ) {
 	sendSysEx(pianoDeVoyage, false, EEPROM_VELOCITY, values);
 	sendSysEx(pianoDeVoyage, true, EEPROM_VELOCITY);
 	
-	sendSysEx(pianoDeVoyage, false, EEPROM_TRANSPOSE, [document.getElementById("transpose").selectedIndex]);
+	sendSysEx(pianoDeVoyage, false, EEPROM_TRANSPOSE, [12]);
 	sendSysEx(pianoDeVoyage, true, EEPROM_TRANSPOSE);
 	
-	sendSysEx(pianoDeVoyage, false, EEPROM_OCTAVE, [document.getElementById("octave").selectedIndex]);
+	sendSysEx(pianoDeVoyage, false, EEPROM_OCTAVE, [3]);
 	sendSysEx(pianoDeVoyage, true, EEPROM_OCTAVE);
 	
-	// knobs
-	values = [];
-	for (var i=0; i<2; i++) {
-		values.push(document.getElementById("knobmode"+i).selectedIndex);
-		values.push(parseInt(document.getElementById("knobcontrol"+i).value, 16));
-	}
-	sendSysEx(pianoDeVoyage, false, EEPROM_KNOBMODE0, values);
-	sendSysEx(pianoDeVoyage, true, EEPROM_KNOBMODE0);
-	
-	// switches
-	values = [];
-	for (var i=0; i<4; i++) {
-		values.push(document.getElementById("butmode"+i).selectedIndex);
-		values.push(parseInt(document.getElementById("butcontrol"+i).value, 16));
-	}
-	sendSysEx(pianoDeVoyage, false, EEPROM_BTNMODE0, values);
-	sendSysEx(pianoDeVoyage, true, EEPROM_BTNMODE0);
-	
-	alert("Keyboard configuration updated");
+	alert("Keyboard updated");
 }
 
 function onSelectVelocity( event ) {
@@ -512,7 +309,6 @@ function onMIDIMessage( event ) {
 			}
 		case 0xF0:
 			v = event.data[6];
-			var values = readSysExValues(event.data);
 			switch(event.data[5]) {
 				case EEPROM_SUSTAIN:
 					// update conf 1
@@ -522,14 +318,9 @@ function onMIDIMessage( event ) {
 				case EEPROM_MIDI_CHANNEL:
 					document.getElementById("channel").selectedIndex = v;
 					break;
-				case EEPROM_OCTAVE:
-					document.getElementById("octave").selectedIndex = v;
-					break;
-				case EEPROM_TRANSPOSE:
-					document.getElementById("transpose").selectedIndex = v;
-					break;
 				case EEPROM_VELOCITY:
 					// update velocity curve
+					var values = readSysEx(event.data);
 					velCurveConfig = [];
 					for (var i=0; i<values.length; i=i+2) {
 						velCurveConfig.push([values[i],127-values[i+1]]);
@@ -537,49 +328,20 @@ function onMIDIMessage( event ) {
 					drawVelocityCurve();
 					break;
 				case EEPROM_FIRMWARE:
+					var values = readSysEx(event.data);
 					var f = String.fromCharCode(values[0]);
-					var v1 = parseInt(String.fromCharCode(values[1]));
-					var v2 = parseInt(String.fromCharCode(values[2]));
-					var v3 = parseInt(String.fromCharCode(values[3]));
-					var v4 = parseInt(String.fromCharCode(values[4]));
-					f += v1 + ".";
-					f += v2 + ".";
-					f += v3 + ".";
-					f += v4;
+					f += String.fromCharCode(values[1]) + ".";
+					f += String.fromCharCode(values[2]) + ".";
+					f += String.fromCharCode(values[3]) + ".";
+					f += String.fromCharCode(values[4]);
 					document.getElementById("firmware").innerHTML = f;
-					var panel = document.getElementById("controlpanel");
-					if ((v1 >=2) && (v2>5)) {
-						panel.removeAttribute("hidden");
-					} else {
-						panel.setAttribute("hidden", true);
-					}
-					break;
-				case EEPROM_KNOBMODE0:
-					var idx = 0;
-					for (var i=0; i<values.length/2; i++) {
-						idx = i*2;
-						var mode = values[idx];
-						var cc = values[idx+1];
-						document.getElementById("knobmode"+i).selectedIndex = mode;
-						document.getElementById("knobcontrol"+i).value = cc.toString(16);
-					}
-					break;
-				case EEPROM_BTNMODE0:
-					var idx = 0;
-					for (var i=0; i<values.length/2; i++) {
-						idx = i*2;
-						var mode = values[idx];
-						var cc = values[idx+1];
-						document.getElementById("butmode"+i).selectedIndex = mode;
-						document.getElementById("butcontrol"+i).value = cc.toString(16);
-					}
 					break;
 			}
 			break;
 	}
 }
 
-function readSysExValues(buffer) {
+function readSysEx(buffer) {
 	var v, v2;
 	var values = [];
 	for (var i=6; i<buffer.length; i++) {
@@ -660,6 +422,7 @@ drawVelocityCurve();
 });
 
 </script>
-<div style="color : lightgrey;">v1.6</div>
+<img src="https://www.myconcertarchive.com/pixel.gif" height="1" width="1">
+<div style="color : lightgrey;">v1.5</div>
  </body>
 </html>
