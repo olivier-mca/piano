@@ -94,6 +94,8 @@
 		</div>
     </div>
   </div>
+  
+  <div class="section" id="octaves" hidden>
 
   <div class="row">
     <div class="col">
@@ -151,6 +153,8 @@
 			</select>
 		</div>
     </div>
+  </div>
+  
   </div>
   
   <div class="section" id="controlpanel" hidden>
@@ -553,6 +557,12 @@ function onMIDIMessage( event ) {
 					} else {
 						panel.setAttribute("hidden", true);
 					}
+					var octaves = document.getElementById("octaves");
+					if (v1>1) {
+						octaves.removeAttribute("hidden");
+					} else {
+						octaves.setAttribute("hidden", true);
+					}
 					break;
 				case EEPROM_KNOBMODE0:
 					var idx = 0;
@@ -660,6 +670,6 @@ drawVelocityCurve();
 });
 
 </script>
-<div style="color : lightgrey;">v1.6</div>
+<div style="color : lightgrey;">v1.6.1</div>
  </body>
 </html>
