@@ -542,7 +542,7 @@ function onMIDIMessage( event ) {
 					f += v4;
 					document.getElementById("firmware").innerHTML = f;
 					var panel = document.getElementById("controlpanel");
-					if ((v1 >=2) && (v2>5)) {
+					if ((v1 >=2) && (v2>3)) {
 						panel.removeAttribute("hidden");
 					} else {
 						panel.setAttribute("hidden", true);
@@ -664,6 +664,6 @@ drawVelocityCurve();
 });
 
 </script>
-<div style="color : lightgrey;">v1.6.2</div>
+<div style="color : lightgrey;">v1.6.3</div>
  </body>
 </html>
