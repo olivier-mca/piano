@@ -274,20 +274,25 @@
 			Keyboard Velocity Curve 
 			</b>
 			<br>
-				Current configuration<br>
-				<canvas id="velocity-canvas" width="128" height="128"></canvas>
-				<br>
-				<div id="velocity">
-				Velocity Curve Presets<br>
-				  <button type="button" id="vel1">1 - Linear</button><br>
-				  <button type="button" id="vel2">2 - Compressed</button><br>
-				  <button type="button" id="vel3">3 - Medium (default)</button><br>
-				  <button type="button" id="vel4">4 - Compressor/Expander</button><br>
-				  <button type="button" id="vel5">5 - Low velocity 1</button><br>
-				  <button type="button" id="vel6">6 - Low velocity 2</button><br>
-				  <button type="button" id="vel7">7 - Compressed top and bottom</button><br>
-				  <button type="button" id="vel8">8 - Full velocity</button>
-				</div>
+			Current configuration<br>
+			<canvas id="velocity-canvas" width="128" height="128"></canvas>
+			<br>
+			<div id="velocity">
+			Velocity Curve Presets<br>
+			  <button type="button" id="vel1">1 - Linear</button><br>
+			  <button type="button" id="vel2">2 - Compressed</button><br>
+			  <button type="button" id="vel3">3 - Medium (default)</button><br>
+			  <button type="button" id="vel4">4 - Compressor/Expander</button><br>
+			  <button type="button" id="vel5">5 - Low velocity 1</button><br>
+			  <button type="button" id="vel6">6 - Low velocity 2</button><br>
+			  <button type="button" id="vel7">7 - Compressed top and bottom</button><br>
+			  <button type="button" id="vel8">8 - Full velocity</button>
+			</div>
+			<div id="EEPROM_RELEASE_VELOCITY_div"  hidden>
+				<input type="checkbox" id="EEPROM_RELEASE_VELOCITY">
+	  			<label for="enabled"> Release velocity enabled</label><br>
+  			</div>
+			<br>
 	  	</div>
 	</div>
 
@@ -330,6 +335,7 @@ const EEPROM_BTNMODE2 = 34;
 const EEPROM_BTNCTRL2 = 35;
 const EEPROM_BTNMODE3 = 36;
 const EEPROM_BTNCTRL3 = 37;
+const EEPROM_RELEASE_VELOCITY = 38;
 const EEPROM_SERIAL = 125;
 const EEPROM_FIRMWARE = 126;
 const MANUFACTURER_MIDI_ID = 0x20;
@@ -402,6 +408,7 @@ function listInputsAndOutputs( midiAccess ) {
 							sendSysEx(pianoDeVoyage, true, EEPROM_FIRMWARE); // don't know why but necessary to send twice
 							sendSysEx(pianoDeVoyage, true, EEPROM_SUSTAIN);
 							sendSysEx(pianoDeVoyage, true, EEPROM_VELOCITY);
+							sendSysEx(pianoDeVoyage, true, EEPROM_RELEASE_VELOCITY);
 							sendSysEx(pianoDeVoyage, true, EEPROM_MIDI_CHANNEL);
 							sendSysEx(pianoDeVoyage, true, EEPROM_TRANSPOSE);
 							sendSysEx(pianoDeVoyage, true, EEPROM_OCTAVE);
@@ -442,6 +449,9 @@ function onSubmit( event ) {
 	}
 	sendSysEx(pianoDeVoyage, false, EEPROM_VELOCITY, values);
 	sendSysEx(pianoDeVoyage, true, EEPROM_VELOCITY);
+	
+	sendSysEx(pianoDeVoyage, false, EEPROM_RELEASE_VELOCITY, [document.getElementById("EEPROM_RELEASE_VELOCITY").checked]);
+	sendSysEx(pianoDeVoyage, true, EEPROM_RELEASE_VELOCITY);
 	
 	sendSysEx(pianoDeVoyage, false, EEPROM_TRANSPOSE, [document.getElementById("transpose").selectedIndex]);
 	sendSysEx(pianoDeVoyage, true, EEPROM_TRANSPOSE);
@@ -530,6 +540,9 @@ function onMIDIMessage( event ) {
 					}
 					drawVelocityCurve();
 					break;
+				case EEPROM_RELEASE_VELOCITY:
+					document.getElementById("EEPROM_RELEASE_VELOCITY").checked = v;
+					break;
 				case EEPROM_FIRMWARE:
 					var f = String.fromCharCode(values[0]);
 					var v1 = parseInt(String.fromCharCode(values[1]));
@@ -541,6 +554,12 @@ function onMIDIMessage( event ) {
 					f += v3 + ".";
 					f += v4;
 					document.getElementById("firmware").innerHTML = f;
+					// check compatible features
+					if ((v1 >=2) && (v2>6)) {
+						document.getElementById("EEPROM_RELEASE_VELOCITY_div").removeAttribute("hidden");
+					} else {
+						document.getElementById("EEPROM_RELEASE_VELOCITY_div").setAttribute("hidden", true);
+					}
 					var panel = document.getElementById("controlpanel");
 					if ((v1 >=2) && (v2>3)) {
 						panel.removeAttribute("hidden");
