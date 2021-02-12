@@ -288,18 +288,14 @@
 			  <button type="button" id="vel7">7 - Compressed top and bottom</button><br>
 			  <button type="button" id="vel8">8 - Full velocity</button>
 			</div>
-			<div id="EEPROM_RELEASE_VELOCITY_div"  hidden>
+			<div id="EEPROM_RELEASE_VELOCITY_div" hidden>
 				<input type="checkbox" id="EEPROM_RELEASE_VELOCITY">
 	  			<label for="enabled"> Release velocity enabled</label><br>
   			</div>
 			<br>
 	  	</div>
 	</div>
-
-	<div class="row">
-	    <hr>
-	</div>
-  
+	<hr>
 	<div class="row">
 	    <div class="col">
 			<input id="update" type="submit" class="btn btn-primary" value="Send to keyboard" disabled>
@@ -637,33 +633,29 @@ function sendSysEx( output , read, addr, values) {
 var velCurveConfig = [];
 var velCurves = [
 	{name:"1 - Linear", points : [[0,127], [127,0], [127,0], [127,0], [127,0],[127,0], [127,0], [127,0], [127,0], [127,0]]},
-	{name:"2 - Compressed", points : [[24, 118], [52, 101], [102, 42], [127,0], [127,0],[127,0], [127,0], [127,0], [127,0], [127,0]]},
-	{name:"3 - Medium", points : [[11, 98],[27, 74],[62, 65],[97, 57],[116, 21],[121, 5],[127,0], [127,0], [127,0], [127,0]]},
-	{name:"4 - Compressor/Expander", points : [[1, 114],[12, 104],[100, 94],[116, 55],[122, 5], [127,0], [127,0], [127,0], [127,0], [127,0]]},
-	{name:"5 - Low velocity 1", points : [[6, 120],[30, 120],[53, 112],[81, 89],[102, 59],[113, 30],[119, 5], [127,0], [127,0], [127,0]]},
-	{name:"6 - Low velocity 2", points : [[9, 116],[45, 116],[62, 110],[83, 95],[100, 73],[113, 44],[120, 6], [127,0], [127,0], [127,0]]},
-	{name:"7 - Compressed top and bottom", points : [[5, 104],[47, 94],[77, 82],[99, 66],[115, 45],[120, 34],[122, 5], [127,0], [127,0], [127,0]]},
+	{name:"2 - Compressed", points : [[0,127],[24, 118], [52, 101], [102, 42], [127,0], [127,0],[127,0], [127,0], [127,0], [127,0]]},
+	{name:"3 - Medium", points : [[0,127],[11, 98],[27, 74],[62, 65],[97, 57],[116, 21],[121, 5],[127,0], [127,0], [127,0],]},
+	{name:"4 - Compressor/Expander", points : [[0,127],[1, 114],[12, 104],[100, 94],[116, 55],[122, 5], [127,0], [127,0], [127,0], [127,0]]},
+	{name:"5 - Low velocity 1", points : [[0,127],[6, 120],[30, 120],[53, 112],[81, 89],[102, 59],[113, 30],[119, 5], [127,0], [127,0]]},
+	{name:"6 - Low velocity 2", points : [[0,127],[9, 116],[45, 116],[62, 110],[83, 95],[100, 73],[113, 44],[120, 6], [127,0], [127,0]]},
+	{name:"7 - Compressed top and bottom", points : [[0,127],[5, 104],[47, 94],[77, 82],[99, 66],[115, 45],[120, 34],[122, 5], [127,0], [127,0]]},
 	{name:"8 - Full velocity", points : [[0,0], [127,0], [127,0], [127,0], [127,0], [127,0], [127,0], [127,0], [127,0], [127,0]]}
 	];
 
 function drawVelocityCurve() {
 	var canvas = document.getElementById("velocity-canvas");
 	var ctx = canvas.getContext("2d");
-	ctx.clearRect(0, 0, 127, 127);
-	var velCurvePoints = [[0,127]];
+	ctx.beginPath();
+	ctx.clearRect(0, 0, 128, 128);
+	var velCurvePoints = [];
 	for (var i=0; i<velCurveConfig.length; i++) {
 		velCurvePoints.push(velCurveConfig[i]);
 	}
-	velCurvePoints.push([127,0]);
 	
 	for (var i=0; i<velCurvePoints.length-1; i++) {
 		var p0 = velCurvePoints[i];
 		var p1 = velCurvePoints[i+1];
-		// point
-		ctx.fillStyle = 'rgb(200, 0, 0)';
-        ctx.beginPath();
-        ctx.arc(p0[0], p0[1], 3, 0, 2 * Math.PI);
-        ctx.fill();
+
         // line
         var xA=p0[0];
         var yA=p0[1];
@@ -675,14 +667,46 @@ function drawVelocityCurve() {
 	}
 }
 
-/*
-selectVelocity(0);
-drawVelocityCurve();
-*/
+var mousePressed = false;
+
+function initVelocityCanvas() {
+    $('#velocity-canvas').mousedown(function (e) {
+        mousePressed = true;
+        updateVelocityCanvas(e.pageX - $(this).offset().left, e.pageY - $(this).offset().top, false);
+    });
+
+    $('#velocity-canvas').mousemove(function (e) {
+        if (mousePressed) {
+        	updateVelocityCanvas(e.pageX - $(this).offset().left, e.pageY - $(this).offset().top, true);
+        }
+    });
+
+    $('#velocity-canvas').mouseup(function (e) {
+        mousePressed = false;
+    });
+	    $('#velocity-canvas').mouseleave(function (e) {
+        mousePressed = false;
+    });
+}
+
+function updateVelocityCanvas(x, y, isDown) {
+    if (isDown) {
+    	var bar = Math.round(x/14.2);
+    	x =  Math.round((bar)*14.2);
+    	if (x>127) {
+    		x = 127;
+    	}
+    	velCurveConfig[bar] = [x, y];
+        drawVelocityCurve();
+    }
+}
+
+initVelocityCanvas();
+	
 
 });
 
 </script>
-<div style="color : lightgrey;">v1.6.3</div>
+<div style="color : lightgrey;">v1.7.0</div>
  </body>
 </html>
