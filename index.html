@@ -31,9 +31,15 @@
         <link href="css/custom.css" rel="stylesheet" />
         
         <!-- START - sendinblue -->
+        <link rel="stylesheet" href="https://sibforms.com/forms/end-form/build/sib-styles.css">
 		<style>
-		
-		
+		#sib-container {
+		    background: #fff;
+		    margin: 0 auto;
+		    padding: 0px;
+		    display: inline-block;
+		    width: 100%;
+		}
 		  #sib-container input:-ms-input-placeholder {
 		    text-align: left;
 		    font-family: "Helvetica", sans-serif;
@@ -51,8 +57,16 @@
 		    font-family: "Helvetica", sans-serif;
 		    color: #c0ccda;
 		  }
+		  
+		  .sib-form {
+		    background-attachment: fixed;
+		    font-size: 16px;
+		    font-family: Roboto,sans-serif;
+		    padding: 1px 1px;
+		    margin: 0;
+		}
 		</style>
-		<link rel="stylesheet" href="https://sibforms.com/forms/end-form/build/sib-styles.css">
+		
 		<!--  END - sendinblue -->
 
     </head>
@@ -75,24 +89,24 @@
         </nav>
         <!-- Masthead-->
         <header class="masthead">
-            <div class="container h-100">
-                <div class="row h-100 align-items-center justify-content-center text-center">
+            <div class="container">
+                <div class="row align-items-center justify-content-center text-center">
                     <div class="col-lg-10 align-self-end">
                         <h1 class="text-uppercase font-weight-bold">Piano de Voyage <br>the portable piano keyboard</h1>
                     </div>
-                    <div class="row justify-content-center">
-	                	<p style="cursor: pointer">
-	                    <img id="animation" class="img-fluid" src="assets/img/animated-play.jpg" alt="Static Image" data-alt="assets/img/animated.gif">
-	                    <div class="portfolio-box-caption">
-		                        <div class="project-name">Piano de Voyage is a modular, full-size, carry-on piano keyboard that will fit in your backpack</div>
-		                        <br>
-		                </div>
-	                    
-	                    </p>
+                    <div class="justify-content-center">
+	                	<div style="cursor: pointer">
+		                    <img id="animation" class="img-fluid" src="assets/img/animated-play.jpg" alt="Static Image" data-alt="assets/img/animated.gif">
+	                        <div style="font-size: large; margin-top: 10px;">
+	                        	Piano de Voyage is a modular, full-size, carry-on piano keyboard that will fit in your backpack		                        	
+	                        </div>
+	                    </div>
 	                </div>
                 </div>
             </div>
         </header>
+        
+		
         
         <section class="page-section" id="features">
             <div class="container">
@@ -124,7 +138,7 @@
 		         	</div>
 		         	<div class="col-lg-6 col-sm-12">
 		            	
-	                    <img class="img-fluid" src="assets/img/portfolio/thumbnails/4.jpg" alt="..." />
+	                    <img class="img-fluid" src="assets/img/portfolio/thumbnails/4b.jpg" alt="..." />
 	                    <div class="portfolio-box-caption">
 	                        <div class="project-name">USB/MIDI port (works with Mac/PC and iPhone, iPad) and connector for regular sustain pedals</div>
 	                        <br>
@@ -136,7 +150,7 @@
         </section>
         
         <!-- Services-->
-        <section class="page-section" id="specs">
+        <section class="page-section bg-b" id="specs">
             <div class="container">
                 <h2 class="text-center mt-0">Technical specifications</h2>
                 <hr class="divider my-4" />
@@ -147,7 +161,7 @@
                         </div>
                     </div>
                     <div class="col-lg-6 col-md-6 col-sm-6">
-                        <div>
+                        <div class="tech">
                             Full size keys<br>
                             Velocity-sensitive spring action keybed<br>
                         </div>
@@ -160,7 +174,7 @@
                         </div>
                     </div>
                     <div class="col-lg-6 col-md-6 col-sm-6">
-                        <div class="mt-3">
+                        <div class="tech mt-3">
 							Weight : 1kg (2.2 lbs)<br>
 							Dimensions : 33x18x5 cm (13x7x2 in)<br>
                         </div>
@@ -173,7 +187,7 @@
                         </div>
                     </div>
                     <div class="col-lg-6 col-md-6 col-sm-6">
-                        <div class="mt-3">
+                        <div class="tech mt-3">
 							Weight : 1.1kg (2.4 lbs)<br>
 							Dimensions : 35x18x5 cm (14x7x2 in)<br>
                         </div>
@@ -186,7 +200,7 @@
                         </div>
                     </div>
                     <div class="col-lg-6 col-md-6 col-sm-6">
-                        <div class="mt-3">
+                        <div class="tech mt-3">
 							USB-B connector for power and MIDI connectivity<br>
 							Low power consumption : works with iPhone or iPad<br>
 							6.35 mm (1⁄4 in) Jack socket for connecting a sustain pedal<br>
@@ -214,31 +228,57 @@
         </section>
         
         <!-- Call to action-->
-        <section class="page-section" id="buy">
+        <section class="page-section bg-b my-5" id="buy">
             <div class="container text-center">
-                <h2 class="mb-4">Buy now!</h2>
-                <hr class="divider my-4" />
-                <div class="text-center">
-			            Piano de Voyage keyboards are produced in France on a very limited quantity basis and only available at<br>
-						<br>
-				</div>
-                <a class="btn btn-primary btn-xl" href="https://shop.pianodevoyage.com">shop.pianodevoyage.com</a>
-            </div>
+                <div class="row justify-content-center mb-3">
+		            <div class="col-lg-6 col-md-6 col-sm-6">
+				            Piano de Voyage keyboards are produced in France on a very limited quantity basis and only available at 
+				            <a href="https://shop.pianodevoyage.com">shop.pianodevoyage.com</a>
+				            <br>
+	            	</div>
+	           </div>
+	           <div class="row justify-content-center mb-3">
+		            <div class="col-lg-6 col-md-6 col-sm-6">
+			                <a class="btn btn-primary btn-xl" href="https://shop.pianodevoyage.com">
+			                	<span style="font-size: 2rem;">BUY NOW</span>
+			                	
+			                </a>
+	            	</div>
+	           </div>
+	           <div class="row justify-content-center">
+		            <div class="col-lg-2 col-md-2 col-sm-2">
+			                <div class="col">
+			                <i class="fa fa-award" style="font-size:xx-large;"></i><br> 1 year warranty
+			                </div>
+			        </div>
+			        <div class="col-lg-2 col-md-2 col-sm-2">
+			                <div class="col">
+			                <i class="fa fa-hand-holding-usd" style="font-size:xx-large;"></i><br>  14 days money back
+			                </div>
+	            	</div>
+	           </div>
+	        </div>
         </section>
+       
         
-		<section class="page-section" id="contact" >
+		<section class="page-section mb-5" id="contact" >
 	        <div class="container">
-	        	<h2 class="text-center mt-0">Contact us</h2>
+	        	<h2 class="text-center mt-0">Contact</h2>
                 <hr class="divider my-4" />
-	            <div class="row">
+	            <div class="row justify-content-center">
 	            <div class="col-lg-6 col-md-6 col-sm-6">
+	            
+	            <div class="text-center">
+			            Want to keep in touch? Have a question?<br>
+			            Feel free to ask..
+						<br><br>
+				</div>
 	            
 	            <!-- Begin Sendinblue Form -->
 
 
 <!-- START - We recommend to place the below code where you want the form in your website html  -->
-<div class="sib-form" style="text-align: center;
-         background-color: #aead84;                                 ">
+<div class="sib-form" style="">
   <div id="sib-form-container" class="sib-form-container">
     <div id="error-message" class="sib-form-message-panel" style="font-size:16px; text-align:left; font-family:&quot;Helvetica&quot;, sans-serif; color:#661d1d; background-color:#ffeded; border-radius:3px; border-color:#ff4949;max-width:540px;">
       <div class="sib-form-message-panel__text sib-form-message-panel__text--center">
@@ -264,28 +304,28 @@
       </div>
     </div>
     <div></div>
-    <div id="sib-container" class="sib-container--large sib-container--vertical" style="text-align:center; background-color:rgba(186,184,150,1); max-width:540px; border-radius:3px; border-width:0px; border-color:#C0CCD9; border-style:solid;">
+    <div id="sib-container" >
       <form id="sib-form" method="POST" action="https://85a4f2e4.sibforms.com/serve/MUIEALmYMcxSw6cj91jE4-OQwLhEduhs8rkeqjHdwPsIxVF7H6My-3OSipIVU64nV1-sL6y7nfsqaGtWoaHTtA7HLdl_giJBLwwIF-kE7yoUehttGb33IC6AoRvynfTPxmRVKhBmJmzv6_wU3705ptIOagbUP3jsRacvz3mfdSzwW6pSd72obkSvUW95RpQk25uCmdArDfPVs21F"
         data-type="subscription">
-        <div style="padding: 8px 0;">
+        <div>
           <div class="sib-input sib-form-block">
             <div class="form__entry entry_block">
               <div class="form__label-row ">
-                <label class="entry__label" style="font-size:16px; text-align:left; font-weight:700; font-family:&quot;Helvetica&quot;, sans-serif; color:#3c4858;" for="EMAIL" data-required="*">
+                <label class="entry__label" for="EMAIL" data-required="*">
                   Email
                 </label>
 
                 <div class="entry__field">
-                  <input class="input" type="text" id="EMAIL" name="EMAIL" autocomplete="off" placeholder="EMAIL" data-required="true" required />
+                  <input class="input" type="text" id="EMAIL" name="EMAIL" autocomplete="off" data-required="true" required />
                 </div>
               </div>
 
-              <label class="entry__error entry__error--primary" style="font-size:16px; text-align:left; font-family:&quot;Helvetica&quot;, sans-serif; color:#661d1d; background-color:#ffeded; border-radius:3px; border-color:#ff4949;">
+              <label class="entry__error entry__error--primary" >
               </label>
             </div>
           </div>
         </div>
-        <div style="padding: 8px 0;">
+        <div>
           <div class="sib-input sib-form-block">
             <div class="form__entry entry_block">
 
@@ -296,16 +336,16 @@
             </div>
           </div>
         </div>
-        <div style="padding: 8px 0;">
+        <div>
           <div class="sib-input sib-form-block">
             <div class="form__entry entry_block">
               <div class="form__label-row ">
-                <label class="entry__label" style="font-size:16px; text-align:left; font-weight:700; font-family:&quot;Helvetica&quot;, sans-serif; color:#3c4858;" for="MESSAGE">
+                <label class="entry__label" for="MESSAGE">
                   Message
                 </label>
 
                 <div class="entry__field">
-                  <textarea rows="2" class="input" maxlength="500" id="MESSAGE" name="MESSAGE" autocomplete="off" placeholder="MESSAGE"></textarea>
+                  <textarea rows="2" class="input" maxlength="500" id="MESSAGE" name="MESSAGE" autocomplete="off"></textarea>
                 </div>
               </div>
 
@@ -314,10 +354,10 @@
             </div>
           </div>
         </div>
-        <div style="padding: 8px 0;">
+        <div>
           <div class="g-recaptcha" data-sitekey="6LcRmPYZAAAAAGhOfmcaOHs0y4YqYhQqbwmmejna" data-callback="invisibleCaptchaCallback" data-size="invisible" onclick="executeCaptcha"></div>
         </div>
-        <div style="padding: 8px 0;">
+        <div>
           <div class="sib-form-block" style="text-align: left">
             <button class="sib-form-block__button sib-form-block__button-with-loader" style="font-size:16px; text-align:left; font-weight:700; font-family:&quot;Helvetica&quot;, sans-serif; color:#FFFFFF; background-color:#f05f40; border-radius:3px; border-width:0px;"
               form="sib-form" type="submit">
@@ -369,16 +409,14 @@
 <!-- End Sendinblue Form -->
 	            
 	            
-	            
+	            	</div>
 	            </div>
 	            </div>
-	        </div>
+
 	    </section>
     
-    <section id="partners" class="page-section" >
+    <section id="partners" class="page-section bg-b" >
         <div class="container">
-        	<h2 class="text-center mt-0">They support us</h2>
-            <hr class="divider my-4" />
             <div class="row">
 	            <div class="col-lg-12 text-center">
 	                <div class="container text-center" style="font-size: 24px;">
