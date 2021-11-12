@@ -552,7 +552,7 @@ function onMIDIMessage( event ) {
 						f += v2 + ".";
 						f += v3 + ".";
 						f += v4;
-						var firmwareVersion = v1*1000+v2+100+v3*10+v4;
+						var firmwareVersion = v1*1000+v2*100+v3*10+v4;
 						document.getElementById("firmware").innerHTML = f;
 						// check compatible features
 						if (firmwareVersion > 2600) {
@@ -661,7 +661,11 @@ function drawVelocityCurve() {
 	for (var i=0; i<velCurvePoints.length-1; i++) {
 		var p0 = velCurvePoints[i];
 		var p1 = velCurvePoints[i+1];
-
+		// point
+		ctx.fillStyle = 'rgb(200, 0, 0)';
+        ctx.beginPath();
+        ctx.arc(p0[0], p0[1], 3, 0, 2 * Math.PI);
+        ctx.fill();
         // line
         var xA=p0[0];
         var yA=p0[1];
