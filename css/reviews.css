@@ -1,0 +1,723 @@
+
+@font-face {
+	font-family: 'Open Sans';
+	font-style: normal;
+	font-weight: 400;
+	font-display: swap;
+	src: local('Open Sans Regular'), local('OpenSans-Regular'),
+		url('https://cdn.trustindex.io/assets/fonts/opensans/cyrillic-ext.woff2')
+		format('woff2');
+	unicode-range: U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF,
+		U+A640-A69F, U+FE2E-FE2F
+}
+
+@font-face {
+	font-family: 'Open Sans';
+	font-style: normal;
+	font-weight: 400;
+	font-display: swap;
+	src: local('Open Sans Regular'), local('OpenSans-Regular'),
+		url('https://cdn.trustindex.io/assets/fonts/opensans/cyrillic.woff2')
+		format('woff2');
+	unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116
+}
+
+@font-face {
+	font-family: 'Open Sans';
+	font-style: normal;
+	font-weight: 400;
+	font-display: swap;
+	src: local('Open Sans Regular'), local('OpenSans-Regular'),
+		url('https://cdn.trustindex.io/assets/fonts/opensans/greek-ext.woff2')
+		format('woff2');
+	unicode-range: U+1F00-1FFF
+}
+
+@font-face {
+	font-family: 'Open Sans';
+	font-style: normal;
+	font-weight: 400;
+	font-display: swap;
+	src: local('Open Sans Regular'), local('OpenSans-Regular'),
+		url('https://cdn.trustindex.io/assets/fonts/opensans/greek.woff2')
+		format('woff2');
+	unicode-range: U+0370-03FF
+}
+
+@font-face {
+	font-family: 'Open Sans';
+	font-style: normal;
+	font-weight: 400;
+	font-display: swap;
+	src: local('Open Sans Regular'), local('OpenSans-Regular'),
+		url('https://cdn.trustindex.io/assets/fonts/opensans/vietnamese.woff2')
+		format('woff2');
+	unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169,
+		U+01A0-01A1, U+01AF-01B0, U+1EA0-1EF9, U+20AB
+}
+
+@font-face {
+	font-family: 'Open Sans';
+	font-style: normal;
+	font-weight: 400;
+	font-display: swap;
+	src: local('Open Sans Regular'), local('OpenSans-Regular'),
+		url('https://cdn.trustindex.io/assets/fonts/opensans/latin-ext.woff2')
+		format('woff2');
+	unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB,
+		U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF
+}
+
+@font-face {
+	font-family: 'Open Sans';
+	font-style: normal;
+	font-weight: 400;
+	font-display: swap;
+	src: local('Open Sans Regular'), local('OpenSans-Regular'),
+		url('https://cdn.trustindex.io/assets/fonts/opensans/latin.woff2')
+		format('woff2');
+	unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6,
+		U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193,
+		U+2212, U+2215, U+FEFF, U+FFFD
+}
+
+@font-face {
+	font-family: 'Open Sans';
+	font-style: normal;
+	font-weight: 700;
+	font-display: swap;
+	src: local('Open Sans Bold'), local('OpenSans-Bold'),
+		url('https://cdn.trustindex.io/assets/fonts/opensans/cyrillic-ext2.woff2')
+		format('woff2');
+	unicode-range: U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF,
+		U+A640-A69F, U+FE2E-FE2F
+}
+
+@font-face {
+	font-family: 'Open Sans';
+	font-style: normal;
+	font-weight: 700;
+	font-display: swap;
+	src: local('Open Sans Bold'), local('OpenSans-Bold'),
+		url('https://cdn.trustindex.io/assets/fonts/opensans/cyrillic2.woff2')
+		format('woff2');
+	unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116
+}
+
+@font-face {
+	font-family: 'Open Sans';
+	font-style: normal;
+	font-weight: 700;
+	font-display: swap;
+	src: local('Open Sans Bold'), local('OpenSans-Bold'),
+		url('https://cdn.trustindex.io/assets/fonts/opensans/greek-ext2.woff2')
+		format('woff2');
+	unicode-range: U+1F00-1FFF
+}
+
+@font-face {
+	font-family: 'Open Sans';
+	font-style: normal;
+	font-weight: 700;
+	font-display: swap;
+	src: local('Open Sans Bold'), local('OpenSans-Bold'),
+		url('https://cdn.trustindex.io/assets/fonts/opensans/greek2.woff2')
+		format('woff2');
+	unicode-range: U+0370-03FF
+}
+
+@font-face {
+	font-family: 'Open Sans';
+	font-style: normal;
+	font-weight: 700;
+	font-display: swap;
+	src: local('Open Sans Bold'), local('OpenSans-Bold'),
+		url('https://cdn.trustindex.io/assets/fonts/opensans/vietnamese2.woff2')
+		format('woff2');
+	unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169,
+		U+01A0-01A1, U+01AF-01B0, U+1EA0-1EF9, U+20AB
+}
+
+@font-face {
+	font-family: 'Open Sans';
+	font-style: normal;
+	font-weight: 700;
+	font-display: swap;
+	src: local('Open Sans Bold'), local('OpenSans-Bold'),
+		url('https://cdn.trustindex.io/assets/fonts/opensans/latin-ext2.woff2')
+		format('woff2');
+	unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB,
+		U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF
+}
+
+@font-face {
+	font-family: 'Open Sans';
+	font-style: normal;
+	font-weight: 700;
+	font-display: swap;
+	src: local('Open Sans Bold'), local('OpenSans-Bold'),
+		url('https://cdn.trustindex.io/assets/fonts/opensans/latin2.woff2')
+		format('woff2');
+	unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6,
+		U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193,
+		U+2212, U+2215, U+FEFF, U+FFFD
+}
+
+.ti-widget.ti-trus {
+	width: 100%;
+	display: block;
+	overflow: hidden;
+	text-align: left;
+	direction: ltr;
+	box-sizing: border-box
+}
+
+.ti-widget.ti-trus * {
+	box-sizing: border-box
+}
+
+.ti-widget.ti-trus a {
+	text-decoration: underline !important;
+	color: inherit
+}
+
+.ti-widget.ti-trus a.ti-header {
+	text-decoration: none !important
+}
+
+.ti-widget.ti-trus a[href="#"], .ti-widget.ti-trus a:not([href]) {
+	text-decoration: none !important;
+	pointer-events: none
+}
+
+.ti-widget.ti-trus strong, .ti-widget.ti-trus strong * {
+	font-weight: bold !important
+}
+
+.ti-widget.ti-trus .ti-widget-container, .ti-widget.ti-trus .ti-widget-container *
+	{
+	font-family: 'Open sans';
+	font-size: 14px;
+	line-height: 1.4em;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box
+}
+
+.ti-widget.ti-trus .ti-widget-container {
+	color: #000000;
+	margin-bottom: 15px
+}
+
+.ti-widget.ti-trus .ti-widget-container .ti-name {
+	font-weight: bold;
+	font-size: 15px;
+	overflow: hidden;
+	padding-right: 25px;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	color: #000000;
+	margin-bottom: 2px
+}
+
+.ti-widget.ti-trus .ti-widget-container .ti-date {
+	color: #000000;
+	opacity: 0.5;
+	font-size: 12px !important
+}
+
+.ti-widget.ti-trus .ti-profile-img {
+	margin: 0 15px 0 0 !important
+}
+
+.ti-widget.ti-trus .ti-profile-img img {
+	width: 40px !important;
+	height: 40px !important;
+	padding: 0px !important;
+	display: block;
+	border-radius: 30px;
+	min-width: initial !important;
+	max-width: initial !important;
+	object-fit: cover;
+	object-position: top
+}
+
+.ti-widget.ti-trus .ti-profile-img-sprite {
+	display: inline-block;
+	float: left;
+	background: white;
+	background-repeat: no-repeat;
+	width: 40px;
+	height: 40px;
+	border-radius: 30px
+}
+
+.ti-widget.ti-trus .ti-profile-details {
+	-webkit-box-flex: 1;
+	-ms-flex: 1;
+	flex: 1;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	text-align: left
+}
+
+.ti-widget.ti-trus .ti-stars {
+	margin-top: 3px;
+	white-space: nowrap
+}
+
+.ti-widget.ti-trus .ti-star {
+	width: 16px;
+	height: 16px;
+	display: inline-block;
+	margin-right: 1px;
+	background-size: contain;
+	background-repeat: no-repeat
+}
+
+.ti-widget.ti-trus .ti-star:before, .ti-widget.ti-trus .ti-star:after {
+	content: none !important
+}
+
+.ti-widget.ti-trus .ti-footer {
+	margin-top: 15px;
+	padding-top: 0px;
+	text-align: center;
+	line-height: 1.45em
+}
+
+.ti-widget.ti-trus .ti-footer .ti-name {
+	color: #000000;
+	font-size: 16px;
+	margin-bottom: 5px;
+	overflow: hidden;
+	text-overflow: ellipsis
+}
+
+.ti-widget.ti-trus .ti-footer .ti-stars {
+	margin-bottom: 3px;
+	margin-top: 0px
+}
+
+.ti-widget.ti-trus .ti-footer .ti-profile-details {
+	padding-top: 4px
+}
+
+.ti-widget.ti-trus .ti-footer .ti-inner {
+	padding-bottom: 10px
+}
+
+.ti-widget.ti-trus .star-lg .ti-star {
+	width: 30px;
+	height: 30px
+}
+
+.ti-widget.ti-trus .ti-d-none {
+	display: none !important
+}
+
+.ti-widget.ti-trus.ti-icon-size1 .ti-review-header:after {
+	width: 25px;
+	height: 25px
+}
+
+.ti-widget.ti-trus.ti-icon-size1 .ti-widget-container .ti-name {
+	padding-left: 30px
+}
+
+.ti-widget.ti-trus.ti-icon-size2 .ti-review-header:after {
+	width: 30px;
+	height: 30px
+}
+
+.ti-widget.ti-trus.ti-icon-size2 .ti-widget-container .ti-name {
+	padding-left: 35px
+}
+
+.ti-widget.ti-trus .ti-rating-text, .ti-widget.ti-trus .ti-rating-text strong,
+	.ti-widget.ti-trus .ti-rating-text strong a, .ti-widget.ti-trus .ti-rating-text strong span,
+	.ti-widget.ti-trus .ti-rating-text span strong, .ti-widget.ti-trus .ti-rating-text span,
+	.ti-widget.ti-trus .ti-footer, .ti-widget.ti-trus .ti-footer strong,
+	.ti-widget.ti-trus .ti-footer span, .ti-widget.ti-trus .ti-footer strong a
+	{
+	font-size: 14px;
+	color: #000000
+}
+
+.ti-widget.ti-trus .ti-large-logo {
+	display: -ms-flexbox;
+	display: flex;
+	-ms-flex-wrap: wrap;
+	flex-wrap: wrap;
+	height: 50px;
+	margin-bottom: 0 !important
+}
+
+.ti-widget.ti-trus .ti-large-logo .ti-v-center {
+	-ms-flex-item-align: center !important;
+	align-self: center !important;
+	text-align: center;
+	-ms-flex-preferred-size: 0;
+	flex-basis: 0;
+	-ms-flex-positive: 1;
+	flex-grow: 1;
+	max-width: 100%
+}
+
+.ti-widget.ti-trus .ti-large-logo img {
+	margin: auto;
+	padding: 0 !important;
+	display: block !important;
+	position: relative
+}
+
+.ti-widget.ti-trus .nowrap {
+	white-space: nowrap;
+	display: inline-block;
+	margin: 0 2px
+}
+
+.ti-widget.ti-trus .nowrap:first-of-type {
+	margin-left: 0
+}
+
+.ti-widget.ti-trus .nowrap:last-of-type {
+	margin-right: 0
+}
+
+.ti-widget.ti-trus .ti-reviews-container-wrapper [class$=inner]>.ti-stars
+	{
+	margin-bottom: 6px;
+	margin-top: 15px
+}
+
+.ti-widget.ti-trus .ti-reviews-container-wrapper {
+	overflow: hidden;
+	display: -ms-flexbox;
+	display: flex;
+	-ms-flex-wrap: nowrap;
+	flex-wrap: nowrap;
+	padding-top: 5px
+}
+
+.ti-widget.ti-trus .ti-col-1 .ti-review-item {
+	-ms-flex: 0 0 100%;
+	flex: 0 0 100%;
+	max-width: 100%
+}
+
+.ti-widget.ti-trus .ti-col-2 .ti-review-item {
+	-ms-flex: 0 0 50%;
+	flex: 0 0 50%;
+	max-width: 50%
+}
+
+.ti-widget.ti-trus .ti-col-3 .ti-review-item {
+	-ms-flex: 0 0 33.333333%;
+	flex: 0 0 33.333333%;
+	max-width: 33.333333%
+}
+
+.ti-widget.ti-trus .ti-col-4 .ti-review-item {
+	-ms-flex: 0 0 25%;
+	flex: 0 0 25%;
+	max-width: 25%
+}
+
+.ti-widget.ti-trus .ti-col-5 .ti-review-item {
+	-ms-flex: 0 0 20%;
+	flex: 0 0 20%;
+	max-width: 20%
+}
+
+.ti-widget.ti-trus .ti-col-6 .ti-review-item {
+	-ms-flex: 0 0 16.666666%;
+	flex: 0 0 16.666666%;
+	max-width: 16.666666%
+}
+
+.ti-widget.ti-trus .ti-reviews-container {
+	position: relative
+}
+
+.ti-widget.ti-trus .ti-read-more {
+	display: none
+}
+
+.ti-widget.ti-trus .ti-review-item {
+	padding: 0 8px;
+	transition: transform 300ms ease-out
+}
+
+.ti-widget.ti-trus .ti-review-item [class$=inner] {
+	border-radius: 4px
+}
+
+.ti-widget.ti-trus .ti-review-item>[class$=inner] {
+	border-style: solid !important;
+	border-color: #ffffff !important;
+	background: #ffffff !important;
+	border-radius: 5px !important;
+	padding: 15px !important;
+	margin: 0 !important;
+	display: block
+}
+
+.ti-widget.ti-trus .ti-review-item .ti-recommendation .ti-recommendation-icon
+	{
+	position: relative;
+	margin: 0 5px;
+	margin-bottom: -3px;
+	text-indent: 3px;
+	display: inline-block;
+	width: 15px;
+	height: 15px
+}
+
+.ti-widget.ti-trus .ti-review-item .ti-recommendation .ti-recommendation-icon:first-child
+	{
+	margin-left: 0
+}
+
+.ti-widget.ti-trus .ti-review-item .ti-recommendation .ti-recommendation-title
+	{
+	font-weight: 700;
+	font-size: 13px !important;
+	opacity: 0.8;
+	position: relative;
+	top: -1px
+}
+
+.ti-widget.ti-trus .ti-review-content {
+	line-height: 20.3px !important;
+	font-size: 14px;
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: inherit !important;
+	overflow: auto !important;
+	overflow-x: hidden !important;
+	padding-right: 10px;
+	scrollbar-color: #8d8d8d #e0e0e0;
+	scrollbar-width: thin
+}
+
+.ti-widget.ti-trus .ti-review-content .ti-stars {
+	margin-bottom: 5px
+}
+
+.ti-widget.ti-trus .ti-review-content strong {
+	font-size: inherit;
+	color: inherit
+}
+
+.ti-widget.ti-trus .ti-review-header {
+	display: -ms-flexbox;
+	display: flex;
+	-ms-flex-wrap: nowrap;
+	flex-wrap: nowrap;
+	position: relative
+}
+
+.ti-widget.ti-trus .ti-review-header:after {
+	content: "";
+	display: block;
+	width: 20px;
+	height: 20px;
+	position: absolute;
+	right: 0px;
+	background-repeat: no-repeat;
+	background-position: center center
+}
+
+.ti-widget.ti-trus .ti-highlight {
+	padding: 1px 2px;
+	margin: 0;
+	box-decoration-break: clone;
+	-webkit-box-decoration-break: clone;
+	border-radius: 1px;
+	-webkit-border-radius: 1px;
+	-moz-border-radius: 1px;
+	background-color: transparent;
+	background-image: linear-gradient(#fbe049, #fbe049);
+	background-size: 100% 19px;
+	background-position: bottom;
+	background-repeat: no-repeat;
+	color: #000 !important
+}
+
+@media ( max-width :479px) {
+	.ti-widget.ti-trus .ti-reviews-container-wrapper {
+		margin-right: 0;
+		margin-left: 0
+	}
+	.ti-widget.ti-trus .ti-review-item {
+		padding: 0
+	}
+}
+
+@media ( min-width :480px) {
+	.ti-widget.ti-trus .ti-review-item:hover {
+		-webkit-transform: translate(0, -5px);
+		-ms-transform: translate(0, -5px);
+		transform: translate(0, -5px)
+	}
+}
+
+.ti-widget.ti-trus ::-webkit-scrollbar {
+	width: 4px;
+	border-radius: 3px
+}
+
+.ti-widget.ti-trus ::-webkit-scrollbar-track {
+	background: rgba(85, 85, 85, 0.1)
+}
+
+.ti-widget.ti-trus ::-webkit-scrollbar-thumb {
+	background: rgba(85, 85, 85, 0.6)
+}
+
+.ti-widget.ti-trus ::-webkit-scrollbar-thumb:hover {
+	background: #555
+}
+
+.ti-verified-review {
+	display: inline-block;
+	background:
+		url('https://cdn.trustindex.io/assets/icon/trustindex-verified-icon.svg');
+	background-size: contain;
+	width: 15px;
+	height: 15px;
+	margin-left: 7px;
+	position: relative;
+	z-index: 2
+}
+
+.ti-verified-review .ti-verified-tooltip {
+	color: #fff !important;
+	background-color: #3B404B !important;
+	padding: 0 10px;
+	border-radius: 4px;
+	font-size: 11px !important;
+	line-height: 22px !important;
+	font-weight: 500;
+	display: inline-block;
+	position: absolute;
+	left: 0;
+	margin-left: 25px;
+	top: -4px;
+	white-space: nowrap;
+	opacity: 0;
+	transition: all 0.3s ease-in-out
+}
+
+.ti-verified-review .ti-verified-tooltip:before {
+	width: 0;
+	height: 0;
+	border-style: solid;
+	border-width: 5px 5px 5px 0;
+	border-color: transparent #3B404B transparent transparent;
+	content: "";
+	position: absolute;
+	left: -5px;
+	top: 50%;
+	margin-top: -5px
+}
+
+.ti-verified-review:hover .ti-verified-tooltip {
+	opacity: 1;
+	margin-left: 20px
+}
+
+.ti-recommendation+.ti-verified-review {
+	top: 2px
+}
+
+.ti-widget .source-Trustpilot .ti-review-header:after {
+	background-image:
+		url("https://cdn.trustindex.io/assets/platform/Trustpilot/icon.svg");
+	background-size: 100% 100%
+}
+
+.ti-widget .source-Trustpilot .ti-star.f {
+	background-image:
+		url("https://cdn.trustindex.io/assets/platform/Trustpilot/star/f.svg")
+}
+
+.ti-widget .source-Trustpilot .ti-star.e {
+	background-image:
+		url("https://cdn.trustindex.io/assets/platform/Trustpilot/star/e.svg")
+}
+
+.ti-widget .source-Trustpilot .ti-star.h {
+	background-image:
+		url("https://cdn.trustindex.io/assets/platform/Trustpilot/star/h.svg")
+}
+
+.ti-widget .star-lg .ti-star {
+	width: 30px;
+	height: 30px
+}
+
+.ti-widget .ti-header .ti-star {
+	width: 20px;
+	height: 20px
+}
+
+.ti-widget.ti-trus.ti-no-logo .ti-review-header:after {
+	background: none !important
+}
+
+.ti-widget.ti-trus.ti-no-stars .ti-review-item .ti-star.f {
+	background-image:
+		url('https://cdn.trustindex.io/assets/platform/Trustindex/star/f.svg')
+		!important
+}
+
+.ti-widget.ti-trus.ti-no-stars .ti-review-item .ti-star.e {
+	background-image:
+		url('https://cdn.trustindex.io/assets/platform/Trustindex/star/e.svg')
+		!important
+}
+
+.ti-widget.ti-trus.ti-no-stars .ti-review-item .ti-star.h {
+	background-image:
+		url('https://cdn.trustindex.io/assets/platform/Trustindex/star/h.svg')
+		!important
+}
+
+.ti-widget.ti-trus {
+	overflow: visible !important
+}
+
+.ti-widget.ti-trus .ti-review-item>.ti-inner {
+	box-shadow: 1px 1px 7px 0px rgba(0, 0, 0, 0.15), 0px 0px 2px 0px
+		rgba(0, 0, 0, 0.05);
+	border-top-width: 0px !important;
+	border-bottom-width: 0px !important;
+	border-left-width: 0px !important;
+	border-right-width: 0px !important;
+	background-color: white !important;
+	backdrop-filter: blur(0px)
+}
+
+.ti-widget.ti-trus .ti-reviews-container-wrapper {
+	margin: 0 !important;
+	overflow: visible;
+	-ms-flex-wrap: wrap;
+	flex-wrap: wrap
+}
+
+.ti-widget.ti-trus .ti-review-item {
+	padding: 8px
+}
+
+.ti-widget.ti-trus .ti-review-content {
+	height: 81.2px !important
+}
+
+@media ( max-width :479px) {
+	.ti-widget.ti-trus .ti-review-item {
+		padding: 5px 0px
+	}
+}
