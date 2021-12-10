@@ -474,7 +474,8 @@ function onMIDIMessage( event ) {
 	}
 	console.log( str );
 	var v = event.data[1];
-	switch(event.data[0]) {
+	var midiCmd = event.data[0] & 0xF0;
+	switch(midiCmd) {
 		case NOTE_ON:
 			document.getElementById("noteon").innerHTML = v;
 			break;
@@ -486,94 +487,94 @@ function onMIDIMessage( event ) {
 				document.getElementById("sustainon").innerHTML = event.data[2];
 				break;
 			}
-		case 0xF0:
-			// make sure this is a write event
-			if (event.data[4] === ACTION_WRITE) {
-				v = event.data[6];
-				var values = readSysExValues(event.data);
-				switch(event.data[5]) {
-					case EEPROM_SUSTAIN:
-						// update conf 1
-						var b = v & 0b00000001;
-						document.getElementById("sustain").selectedIndex = b;
-						break;
-					case EEPROM_MIDI_CHANNEL:
-						document.getElementById("channel").selectedIndex = v;
-						break;
-					case EEPROM_OCTAVE:
-						document.getElementById("octave").selectedIndex = v;
-						break;
-					case EEPROM_TRANSPOSE:
-						document.getElementById("transpose").selectedIndex = v;
-						break;
-					case EEPROM_VELOCITY:
-						// update velocity curve
-						velCurveConfig = [];
-						for (var i=0; i<values.length; i=i+2) {
-							velCurveConfig.push([values[i],127-values[i+1]]);
+	}
+	if (event.data[0] == 0xF0) {
+		// make sure this is a write event
+		if (event.data[4] === ACTION_WRITE) {
+			v = event.data[6];
+			var values = readSysExValues(event.data);
+			switch(event.data[5]) {
+				case EEPROM_SUSTAIN:
+					// update conf 1
+					var b = v & 0b00000001;
+					document.getElementById("sustain").selectedIndex = b;
+					break;
+				case EEPROM_MIDI_CHANNEL:
+					document.getElementById("channel").selectedIndex = v;
+					break;
+				case EEPROM_OCTAVE:
+					document.getElementById("octave").selectedIndex = v;
+					break;
+				case EEPROM_TRANSPOSE:
+					document.getElementById("transpose").selectedIndex = v;
+					break;
+				case EEPROM_VELOCITY:
+					// update velocity curve
+					velCurveConfig = [];
+					for (var i=0; i<values.length; i=i+2) {
+						velCurveConfig.push([values[i],127-values[i+1]]);
+					}
+					drawVelocityCurve();
+					break;
+				case EEPROM_RELEASE_VELOCITY:
+					document.getElementById("EEPROM_RELEASE_VELOCITY").checked = v;
+					break;
+				case EEPROM_FIRMWARE:
+					var f = String.fromCharCode(values[0]);
+					var v1 = parseInt(String.fromCharCode(values[1]));
+					var v2 = parseInt(String.fromCharCode(values[2]));
+					var v3 = parseInt(String.fromCharCode(values[3]));
+					var v4 = parseInt(String.fromCharCode(values[4]));
+					f += v1 + ".";
+					f += v2 + ".";
+					f += v3 + ".";
+					f += v4;
+					var firmwareVersion = v1*1000+v2*100+v3*10+v4;
+					document.getElementById("firmware").innerHTML = f;
+					// check compatible features
+					if (firmwareVersion > 2600) {
+						document.getElementById("EEPROM_RELEASE_VELOCITY_div").removeAttribute("hidden");
+					} else {
+						document.getElementById("EEPROM_RELEASE_VELOCITY_div").setAttribute("hidden", true);
+					}
+					var panel = document.getElementById("controlpanel");
+					if (firmwareVersion > 2300) {
+						panel.removeAttribute("hidden");
+					} else {
+						panel.setAttribute("hidden", true);
+					}
+					var octaves = document.getElementById("octaves");
+					if (v1>1) {
+						octaves.removeAttribute("hidden");
+					} else {
+						octaves.setAttribute("hidden", true);
+					}
+					break;
+				case EEPROM_KNOBMODE0:
+					if (values.length > 2) {
+						var idx = 0;
+						for (var i=0; i<values.length/2; i++) {
+							idx = i*2;
+							var mode = values[idx];
+							var cc = values[idx+1];
+							document.getElementById("knobmode"+i).selectedIndex = mode;
+							document.getElementById("knobcontrol"+i).value = cc.toString(16);
 						}
-						drawVelocityCurve();
-						break;
-					case EEPROM_RELEASE_VELOCITY:
-						document.getElementById("EEPROM_RELEASE_VELOCITY").checked = v;
-						break;
-					case EEPROM_FIRMWARE:
-						var f = String.fromCharCode(values[0]);
-						var v1 = parseInt(String.fromCharCode(values[1]));
-						var v2 = parseInt(String.fromCharCode(values[2]));
-						var v3 = parseInt(String.fromCharCode(values[3]));
-						var v4 = parseInt(String.fromCharCode(values[4]));
-						f += v1 + ".";
-						f += v2 + ".";
-						f += v3 + ".";
-						f += v4;
-						var firmwareVersion = v1*1000+v2*100+v3*10+v4;
-						document.getElementById("firmware").innerHTML = f;
-						// check compatible features
-						if (firmwareVersion > 2600) {
-							document.getElementById("EEPROM_RELEASE_VELOCITY_div").removeAttribute("hidden");
-						} else {
-							document.getElementById("EEPROM_RELEASE_VELOCITY_div").setAttribute("hidden", true);
+					}
+					break;
+				case EEPROM_BTNMODE0:
+					if (values.length > 2) {
+						var idx = 0;
+						for (var i=0; i<values.length/2; i++) {
+							idx = i*2;
+							var mode = values[idx];
+							var cc = values[idx+1];
+							document.getElementById("butmode"+i).selectedIndex = mode;
+							document.getElementById("butcontrol"+i).value = cc.toString(16);
 						}
-						var panel = document.getElementById("controlpanel");
-						if (firmwareVersion > 2300) {
-							panel.removeAttribute("hidden");
-						} else {
-							panel.setAttribute("hidden", true);
-						}
-						var octaves = document.getElementById("octaves");
-						if (v1>1) {
-							octaves.removeAttribute("hidden");
-						} else {
-							octaves.setAttribute("hidden", true);
-						}
-						break;
-					case EEPROM_KNOBMODE0:
-						if (values.length > 2) {
-							var idx = 0;
-							for (var i=0; i<values.length/2; i++) {
-								idx = i*2;
-								var mode = values[idx];
-								var cc = values[idx+1];
-								document.getElementById("knobmode"+i).selectedIndex = mode;
-								document.getElementById("knobcontrol"+i).value = cc.toString(16);
-							}
-						}
-						break;
-					case EEPROM_BTNMODE0:
-						if (values.length > 2) {
-							var idx = 0;
-							for (var i=0; i<values.length/2; i++) {
-								idx = i*2;
-								var mode = values[idx];
-								var cc = values[idx+1];
-								document.getElementById("butmode"+i).selectedIndex = mode;
-								document.getElementById("butcontrol"+i).value = cc.toString(16);
-							}
-						}
-						break;
+					}
+					break;
 				}
-				break;
 			}
 		}
 		
@@ -692,6 +693,6 @@ initVelocityCanvas();
 });
 
 </script>
-<div style="color : lightgrey;">v1.7.0</div>
+<div style="color : lightgrey;">v1.7.1</div>
  </body>
 </html>
