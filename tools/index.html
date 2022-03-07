@@ -162,86 +162,94 @@ button, input, optgroup, select, textarea {
 			Knobs
 			</b>
 
-					<div>
-						Left
-						<select id="knobmode0" disabled>
-						  <option value="0">Unassigned</option>
-						  <option value="1">MIDI Control</option>
-						  <option value="2">Pitch bend</option>
-						  <option value="3">Aftertouch</option>
-						</select>
-						Control number :
-						<input id="knobcontrol0" type="text" maxlength="2" size="2" disabled>
-					</div>
+				<div>
+					Left
+					<select id="knobmode0" disabled>
+					  <option value="0">Unassigned</option>
+					  <option value="1">MIDI Control</option>
+					  <option value="2">Pitch bend</option>
+					  <option value="3">Aftertouch</option>
+					</select>
+					Control number :
+					<input id="knobcontrol0" type="text" maxlength="2" size="2" disabled>
+				</div>
 
 
-					<div>
-						Right
-						<select id="knobmode1" disabled>
-						  <option value="0">Unassigned</option>
-						  <option value="1">MIDI Control</option>
-						  <option value="2">Pitch bend</option>
-						  <option value="3">Aftertouch</option>
-						</select>
-						Control number :
-						<input id="knobcontrol1" type="text" maxlength="2" size="2" disabled>
-					</div>
-
-
+				<div>
+					Right
+					<select id="knobmode1" disabled>
+					  <option value="0">Unassigned</option>
+					  <option value="1">MIDI Control</option>
+					  <option value="2">Pitch bend</option>
+					  <option value="3">Aftertouch</option>
+					</select>
+					Control number :
+					<input id="knobcontrol1" type="text" maxlength="2" size="2" disabled>
+				</div>
 
 		    <b>
 			Switches
 			</b>
 
-					<div>
-						Top left
-						<select id="butmode0" disabled>
-						  <option value="0">Unassigned</option>
-						  <option value="1">Program shift</option>
-						  <option value="2">Octave shift</option>
-						  <option value="3">Program select</option>
-						</select>
-						Control number :
-						<input id="butcontrol0" type="text" maxlength="2" size="2" disabled>
-					</div>
-
-					<div>
-						Lower left
-						<select id="butmode1" disabled>
-						  <option value="0">Unassigned</option>
-						  <option value="1">Program shift</option>
-						  <option value="2">Octave shift</option>
-						  <option value="3">Program select</option>
-						</select>
-						Control number :
-						<input id="butcontrol1" type="text" maxlength="2" size="2" disabled>
-					</div>
-
-					<div>
-						Top right
-						<select id="butmode2" disabled>
-						  <option value="0">Unassigned</option>
-						  <option value="1">Program shift</option>
-						  <option value="2">Octave shift</option>
-						  <option value="3">Program select</option>
-						</select>
-						Control number :
-						<input id="butcontrol2" type="text" maxlength="2" size="2" disabled>
-					</div>
-
-					<div>
-						Lower right
-						<select id="butmode3" disabled>
-						  <option value="0">Unassigned</option>
-						  <option value="1">Program shift</option>
-						  <option value="2">Octave shift</option>
-						  <option value="3">Program select</option>
-						</select>
-						Control number :
-						<input id="butcontrol3" type="text" maxlength="2" size="2" disabled>
-					</div>
+				<div>
+					Top left
+					<select id="butmode0" disabled>
+					  <option value="0">Unassigned</option>
+					  <option value="1">Program shift</option>
+					  <option value="2">Octave shift</option>
+					  <option value="3">Program select</option>
+					</select>
+					Control number :
+					<input id="butcontrol0" type="text" maxlength="2" size="2" disabled>
 				</div>
-    		</div>
+
+				<div>
+					Lower left
+					<select id="butmode1" disabled>
+					  <option value="0">Unassigned</option>
+					  <option value="1">Program shift</option>
+					  <option value="2">Octave shift</option>
+					  <option value="3">Program select</option>
+					</select>
+					Control number :
+					<input id="butcontrol1" type="text" maxlength="2" size="2" disabled>
+				</div>
+
+				<div>
+					Top right
+					<select id="butmode2" disabled>
+					  <option value="0">Unassigned</option>
+					  <option value="1">Program shift</option>
+					  <option value="2">Octave shift</option>
+					  <option value="3">Program select</option>
+					</select>
+					Control number :
+					<input id="butcontrol2" type="text" maxlength="2" size="2" disabled>
+				</div>
+
+				<div>
+					Lower right
+					<select id="butmode3" disabled>
+					  <option value="0">Unassigned</option>
+					  <option value="1">Program shift</option>
+					  <option value="2">Octave shift</option>
+					  <option value="3">Program select</option>
+					</select>
+					Control number :
+					<input id="butcontrol3" type="text" maxlength="2" size="2" disabled>
+				</div>
+					
+				<div id="Advanced_div" hidden>
+					<b>
+					Advanced
+					</b>
+					<div id="EEPROM_USB_SERIAL_div" hidden>
+						<input type="checkbox" id="EEPROM_USB_SERIAL">
+			  			<label for="enabled"> USB Serial enabled</label><br>
+		  			</div>
+			  	</div>
+			</div>
+		</div>
 
 
 	    <div class="col-lg-6 col-sm-12">
@@ -307,6 +315,7 @@ const EEPROM_BTNCTRL2 = 35;
 const EEPROM_BTNMODE3 = 36;
 const EEPROM_BTNCTRL3 = 37;
 const EEPROM_RELEASE_VELOCITY = 38;
+const EEPROM_USB_SERIAL = 39;
 const EEPROM_SERIAL = 125;
 const EEPROM_FIRMWARE = 126;
 const MANUFACTURER_MIDI_ID = 0x20;
@@ -386,6 +395,7 @@ function listInputsAndOutputs( midiAccess ) {
 							sendSysEx(pianoDeVoyage, true, EEPROM_OCTAVE);
 							sendSysEx(pianoDeVoyage, true, EEPROM_KNOBMODE0);
 							sendSysEx(pianoDeVoyage, true, EEPROM_BTNMODE0);
+							sendSysEx(pianoDeVoyage, true, EEPROM_USB_SERIAL);
 						} else {
 							// will trigger a state change event
 							input.open();
@@ -448,6 +458,10 @@ function onSubmit( event ) {
 	}
 	sendSysEx(pianoDeVoyage, false, EEPROM_BTNMODE0, values);
 	sendSysEx(pianoDeVoyage, true, EEPROM_BTNMODE0);
+	
+	// usb serial
+	sendSysEx(pianoDeVoyage, false, EEPROM_USB_SERIAL, [document.getElementById("EEPROM_USB_SERIAL").checked]);
+	sendSysEx(pianoDeVoyage, true, EEPROM_USB_SERIAL);
 
 	alert("Keyboard configuration updated");
 }
@@ -532,6 +546,13 @@ function onMIDIMessage( event ) {
 					var firmwareVersion = v1*1000+v2*100+v3*10+v4;
 					document.getElementById("firmware").innerHTML = f;
 					// check compatible features
+					if (firmwareVersion >= 2850) {
+						document.getElementById("Advanced_div").removeAttribute("hidden");
+						document.getElementById("EEPROM_USB_SERIAL_div").removeAttribute("hidden");
+					} else {
+						document.getElementById("Advanced_div").setAttribute("hidden", true);
+						document.getElementById("EEPROM_USB_SERIAL_div").setAttribute("hidden", true);
+					}
 					if (firmwareVersion > 2600) {
 						document.getElementById("EEPROM_RELEASE_VELOCITY_div").removeAttribute("hidden");
 					} else {
@@ -573,6 +594,9 @@ function onMIDIMessage( event ) {
 							document.getElementById("butcontrol"+i).value = cc.toString(16);
 						}
 					}
+					break;
+				case EEPROM_USB_SERIAL:
+					document.getElementById("EEPROM_USB_SERIAL").checked = v;
 					break;
 				}
 			}
@@ -693,6 +717,6 @@ initVelocityCanvas();
 });
 
 </script>
-<div style="color : lightgrey;">v1.7.1</div>
+<div style="color : lightgrey;">v1.8.0</div>
  </body>
 </html>
