@@ -193,18 +193,6 @@ button, input, optgroup, select, textarea {
 
 				<div>
 					Top left
-					<select id="butmode0" disabled>
-					  <option value="0">Unassigned</option>
-					  <option value="1">Program shift</option>
-					  <option value="2">Octave shift</option>
-					  <option value="3">Program select</option>
-					</select>
-					Control number :
-					<input id="butcontrol0" type="text" maxlength="2" size="2" disabled>
-				</div>
-
-				<div>
-					Lower left
 					<select id="butmode1" disabled>
 					  <option value="0">Unassigned</option>
 					  <option value="1">Program shift</option>
@@ -216,19 +204,19 @@ button, input, optgroup, select, textarea {
 				</div>
 
 				<div>
-					Top right
-					<select id="butmode2" disabled>
+					Lower left
+					<select id="butmode0" disabled>
 					  <option value="0">Unassigned</option>
 					  <option value="1">Program shift</option>
 					  <option value="2">Octave shift</option>
 					  <option value="3">Program select</option>
 					</select>
 					Control number :
-					<input id="butcontrol2" type="text" maxlength="2" size="2" disabled>
+					<input id="butcontrol0" type="text" maxlength="2" size="2" disabled>
 				</div>
 
 				<div>
-					Lower right
+					Top right
 					<select id="butmode3" disabled>
 					  <option value="0">Unassigned</option>
 					  <option value="1">Program shift</option>
@@ -237,6 +225,18 @@ button, input, optgroup, select, textarea {
 					</select>
 					Control number :
 					<input id="butcontrol3" type="text" maxlength="2" size="2" disabled>
+				</div>
+
+				<div>
+					Lower right
+					<select id="butmode2" disabled>
+					  <option value="0">Unassigned</option>
+					  <option value="1">Program shift</option>
+					  <option value="2">Octave shift</option>
+					  <option value="3">Program select</option>
+					</select>
+					Control number :
+					<input id="butcontrol2" type="text" maxlength="2" size="2" disabled>
 				</div>
 					
 				<div id="Advanced_div" hidden>
@@ -717,6 +717,6 @@ initVelocityCanvas();
 });
 
 </script>
-<div style="color : lightgrey;">v1.8.0</div>
+<div style="color : lightgrey;">v1.8.1</div>
  </body>
 </html>
