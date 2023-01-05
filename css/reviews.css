@@ -633,23 +633,23 @@
 	top: 2px
 }
 
-.ti-widget .source-Trustpilot .ti-review-header:after {
+.ti-widget .source-ttt .ti-review-header:after {
 	background-image:
 		url("https://cdn.trustindex.io/assets/platform/Trustpilot/icon.svg");
 	background-size: 100% 100%
 }
 
-.ti-widget .source-Trustpilot .ti-star.f {
+.ti-widget .source-ttt .ti-star.f {
 	background-image:
 		url("https://cdn.trustindex.io/assets/platform/Trustpilot/star/f.svg")
 }
 
-.ti-widget .source-Trustpilot .ti-star.e {
+.ti-widget .source-ttt .ti-star.e {
 	background-image:
 		url("https://cdn.trustindex.io/assets/platform/Trustpilot/star/e.svg")
 }
 
-.ti-widget .source-Trustpilot .ti-star.h {
+.ti-widget .source-ttt .ti-star.h {
 	background-image:
 		url("https://cdn.trustindex.io/assets/platform/Trustpilot/star/h.svg")
 }
