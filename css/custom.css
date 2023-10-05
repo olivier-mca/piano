@@ -47,13 +47,11 @@ header.masthead {
 @media (min-width: 992px) {
   #mainNav {
     box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
-    background-color: #fff;
   }
   #mainNav .navbar-brand {
     color: #212529;
   }
   #mainNav .navbar-brand:hover {
-    color: #fff;
   }
   #mainNav .navbar-nav .nav-item .nav-link {
     color: #212529;
