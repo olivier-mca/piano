@@ -90,7 +90,12 @@ header.masthead {
   background-color: #f4f1ea;
 }
 
-
+hr.divider {
+  max-width: 3.25rem;
+  border-width: 0.2rem;
+  border-color: #f4623a;
+  margin: 1rem auto;
+}
 
 
 .tech {
